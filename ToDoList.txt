@@ -6,8 +6,9 @@ ToDoList:
 Score-laskuri
     - sekunneista "käännetään" matka esim metreinä
 
-Tausta (ei tule lentokoneen päälle)
+Tausta ja nopeus (ei tule lentokoneen päälle)
     - alkuun taustalla taloja, (lintuja), pilvet, lentokone, sitten tummenee, sitten sateliitti, sitten planeetta/ufoja
+    - peli muuttuu pikkuhiljaa nopeammaksi
 
 Ukko (tai mikä ikinä onkaan) animaatioineen
 
