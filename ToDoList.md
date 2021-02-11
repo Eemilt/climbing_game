@@ -11,6 +11,9 @@ Tausta (ei tule lentokoneen päälle)
 
 Ukko (tai mikä ikinä onkaan) animaatioineen
 
+Törmäys ominaisuus
+    -jos osuu ikkunaan peli loppuu? tai pisteet vähenee tms
+
 Sulava character control
     - hahmo liikkumaan niin, että se ei nyvi ja on hyvin responsiivinen (ei viivettä liikkeessä).
 
