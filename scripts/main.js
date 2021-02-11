@@ -131,7 +131,7 @@ document.onkeyup = function(e) {
 }*/
 
 function animate(){
-
+	SPEED  += 0.0000002;
   
   // add objects to scene
 	let probability=Math.random(); //[0..1)		//spawnauksen sijaintitodennäköisyys
