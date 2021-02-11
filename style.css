@@ -1,0 +1,29 @@
+body{
+    padding:0px;
+    margin:0px;
+    background: rgb(13, 0, 255);
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 27%, rgba(0,212,255,1) 100%);
+}
+canvas{
+    background:white;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:80vmin;
+    height:80vmin;
+}
+#overlay{
+    background:rgba(0,0,0,0.7);
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:70vmin;
+    height:70vmin;
+
+    padding:1vmin;
+    margin:0px;
+    color: white;
+    border-radius:2vmin;
+}
