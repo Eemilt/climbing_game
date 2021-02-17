@@ -27,3 +27,4 @@ Putoavia objekteja
 Basic valikko
     - sisältää play napin, tarvittaessa settings, (personal high score?)
 
+https://www.youtube.com/watch?v=XYzA_kPWyJ8 collision video
