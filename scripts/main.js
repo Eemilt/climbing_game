@@ -48,6 +48,7 @@ var RIGHT = false;
 var UP = false;
 var DOWN = false;
 
+/**  turha ???
 function move() {
 	
 	if (RIGHT) { 
@@ -64,6 +65,8 @@ function move() {
   }
 	
 }
+
+*/
 
 function onkeydown(e) {
   /*
@@ -136,7 +139,7 @@ function animate(){
   // add objects to scene
 	let probability=Math.random(); //[0..1)		//spawnauksen sijaintitodennäköisyys
 	let probabilityxaxis = Math.random() //spawnattujen laatikoiden sivuittaissijainti
-
+ 
     if(probability>0.0){ // probability to generate SOME object, tällä hetkellä spawnataan niin usein kun pystyy ja rajoitetaan vain sillä ettei ikkunat saa tulla liian lähekkäin. Toisin sanoen ikkunoiden väli on koko ajan sama "sallitturaja" muuttuesta riippuen
 		properties={
 		levels:1,
@@ -150,7 +153,7 @@ function animate(){
 		let mahtuuko = false;  		//tämä pistetään trueksi jos canvakseen mahtuu uusi ikkuna
 
 		if(OBJECTS.length>0){		//ehdotetaan että spawnaa ainakin jotain jos yhtään ikkunaa ei olekkaan liikenteessä else haarassa
-			console.log(OBJECTS[OBJECTS.length-1].location[1])
+			//(OBJECTS[OBJECTS.length-1].location[1])
 			if(OBJECTS[OBJECTS.length-1].location[1]>sallitturaja){		//taulukon vika alkio on aina näemmä "ylin" ja sen korkeuden tarkastelu riittää päättämään voiko uuden ikkunan asettaa
 				mahtuuko= true;
 			}
@@ -173,6 +176,10 @@ function animate(){
 	// move objects in scene
 	for(let i=0;i<OBJECTS.length;i++){
 		OBJECTS[i].location[1]+=SPEED;
+		//console.log(i + " " + OBJECTS[i].location[0] +"taalla" + "rectX " + rectX);
+		//console.log(distance(OBJECTS[0].location[0],OBJECTS[0].location[1],rectX,rectY));
+
+		
 		//console.log(" location 1 arvo on " + OBJECTS[i].location[1]+" ja raja arvo on " + OBJECTS[i].scale*9.5); 	// tän avulla saa tausta väärin skaletettuna testailtua millon pitäs turhien "ikkunoiden" kadota
 		//console.log("arvon 0 sijainti on: " + OBJECTS[i].location[0] + " ja arvon 1 sijainti on: "+ OBJECTS[i].location[1])
 		if(OBJECTS[i].location[1]>OBJECTS[i].scale*9.5){				//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
@@ -195,6 +202,13 @@ function animate(){
 function checkrepeat (){		//opelta jääny, en tiedä mitä tää tekee
 
 
+}
+
+function distance(ikkuna_x, ikkuna_y, laatikko_x,laatikko_y ){
+	let x_etaisyys= laatikko_x-ikkuna_x;
+	let y_etaisyys = laatikko_y-ikkuna_y;
+
+	return Math.sqrt(Math.pow(x_etaisyys,2) + Math.pow(y_etaisyys,2)) //Pythagoras
 }
 
 function drawScene(){
