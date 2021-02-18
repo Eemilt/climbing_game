@@ -13,7 +13,7 @@ var rectY = 0.9;
 
 function main(){
 	let canvas = document.getElementById("myCanvas")
-  let ctx=canvas.getContext("2d");
+  	let ctx=canvas.getContext("2d");
 	
 	canvas.width=SIZE;
 	canvas.height=SIZE;
@@ -43,45 +43,52 @@ function rect(ctx) {
 }
 
 
-var LEFT = false;
-var RIGHT = false;
-var UP = false;
-var DOWN = false;
 
-/**  turha ???
-function move() {
+window.addEventListener("keydown", keysPressed, false);
+window.addEventListener("keyup", keysReleased, false);
+ 
+var keys = [];
+function keysPressed(e) {
 	
-	if (RIGHT) { 
-		rectX = rectX+ 0.035;
-	}
-	if (LEFT) {
-		rectX = rectX-0.035;
-	}
-  if (UP) {
-    rectY = rectY - 0.035;
-  }
-  if (DOWN){
-    rectY = rectY + 0.035;
-  }
+    // store an entry for every key pressed
+    keys[e.keyCode] = true;
+ 
+    // left
+    if (keys[37] && rectX>0.134999998) {
+      rectX -= 0.035;
+    }
+ 
+    // right
+    if (keys[39] && rectX<0.815) {
+      rectX += 0.035;
+    }
+ 
+    // up
+    if (keys[38] && rectY>0.022) {
+      rectY -= 0.035;
+    }
+ 
+    // down
+    if (keys[40] && rectY<0.935) {
+      rectY += 0.035;
+    }
+ 
+    e.preventDefault();
+ 
+	//window.requestAnimationFrame(keysPressed);
+
 	
+    drawScene();
+}
+ 
+function keysReleased(e) {
+    // mark keys that were released
+    keys[e.keyCode] = false;
 }
 
-*/
 
+/*
 function onkeydown(e) {
-  /*
-  if (RIGHT) { 
-		rectX = rectX+ 0.035;
-	}
-	if (LEFT) {
-		rectX = rectX-0.035;
-	}
-  if (UP) {
-    rectY = rectY - 0.035;
-  }
-  if (DOWN){
-    rectY = rectY + 0.035;
-  }*/
   
     if (e.keyCode == 39 && rectX<0.815) { 
       rectX = rectX+ 0.035;
@@ -98,40 +105,16 @@ function onkeydown(e) {
     else if (e.keyCode == 40 && rectY<0.935) {
         rectY = rectY + 0.035;
       DOWN = true;
-	} //down arrow*/
+	} //down arrow
 	console.log(" X arvo on:   "+rectX+" Y arvo on:  "+ rectY)
 	drawScene();
-}
-
-
-
-window.addEventListener("keydown", onkeydown);
-
-////////////////////////////////////////////////////
-
-
-/*
-window.addEventListener("onkeydown", e => {
-  if(e.keyCode == 37) LEFT = true;
-	if(e.keyCode == 39) RIGHT = true;
-  // do something
-});
-
-window.addEventListener("keyup", e => {
-  if(e.keyCode == 37) LEFT = false;
-	if(e.keyCode == 39) RIGHT = false;
-  // do something
-});*/
-
-/*document.onkeydown = function(e) {
-	if(e.keyCode == 37) LEFT = true;
-	if(e.keyCode == 39) RIGHT = true;
-}
-
-document.onkeyup = function(e) {
-	if(e.keyCode == 37) LEFT = false;
-	if(e.keyCode == 39) RIGHT = false;
 }*/
+
+
+
+//window.addEventListener("keydown", onkeydown);
+
+////////////////////////////////////////////////
 
 function animate(){
 	SPEED  += 0.0000002;
