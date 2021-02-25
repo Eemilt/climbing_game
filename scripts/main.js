@@ -1,10 +1,4 @@
-/*
-Few changes from in-class:
-- remove the sine function for movement speed
-- stretched canvas to full screen in CSS
-- other small changes in CSS
-- removed the first 3 houses which were hard-coded there
-*/
+
 const SIZE=1000;
 const OBJECTS=[];
 let SPEED=0.001;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
@@ -23,6 +17,8 @@ function main(){
 	//ctx.scale(SIZE*0.5,SIZE*0.5);
 	//ctx.translate(0.5,0.5);
 	
+	this.GAMESTATE = GAMESTATE.MENU;
+	console.log(this.GAMESTATE);
     drawScene();
 	animate();
 	
@@ -31,9 +27,19 @@ function main(){
 	
 }
 
+const GAMESTATE = {
+	RUNNING: 1,
+	MENU: 2,
+	GAMEOVER: 3
+};
+
 
 
 function rect(ctx) {
+
+	if (this.GAMESTATE == GAMESTATE.MENU){
+		return;
+	}
 	ctx.beginPath();
     ctx.lineWidth=0.01;
     ctx.fillStyle="red";
@@ -72,6 +78,13 @@ function keysPressed(e) {
     if (keys[40] && rectY<0.935) {
       rectY += 0.035;
     }
+
+	if (this.GAMESTATE == GAMESTATE.MENU || this.GAMESTATE == GAMESTATE.GAMEOVER){
+		if(keys[32]){
+			this.GAMESTATE = GAMESTATE.RUNNING;
+			console.log(this.GAMESTATE);
+		}
+	}
  
     e.preventDefault();
  
@@ -118,7 +131,7 @@ function onkeydown(e) {
 
 function animate(){
 	SPEED  += 0.0000002;
-  
+	
   // add objects to scene
 	let probability=Math.random(); //[0..1)		//spawnauksen sijaintitodennäköisyys
 	let probabilityxaxis = Math.random() //spawnattujen laatikoiden sivuittaissijainti
@@ -144,7 +157,7 @@ function animate(){
 			mahtuuko=true;
 		}
 			
-		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
+		if(mahtuuko == true && this.GAMESTATE == GAMESTATE.RUNNING){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
 			OBJECTS.push(new Windows([(probabilityxaxis*(0.75-0.22)+0.22)+size*0.5,y], size, properties));	
 		}
 
@@ -180,6 +193,7 @@ function animate(){
 	
 	drawScene();
 	window.requestAnimationFrame(animate);			//tällä loopataan vissiin animaatio
+	
 }
 
 function checkrepeat (){		//opelta jääny, en tiedä mitä tää tekee
@@ -198,15 +212,26 @@ function drawScene(){
 	
 	let canvas = document.getElementById("myCanvas")
 	let ctx=canvas.getContext("2d");
-	
 	drawBackground(ctx);
 	rect(ctx);
 		for(let i=0;i<OBJECTS.length;i++){
     		OBJECTS[i].draw(ctx);
     	}
+	if(this.GAMESTATE == GAMESTATE.MENU){
+		drawMenu(ctx);
+		}	
     }
 
+function drawMenu(ctx){
+
+	ctx.rect(0,0,1,1);
+	ctx.fillStyle = "rgba(0,0,0,0.5)";
+	ctx.fill();
+}
+
+
 function drawBackground(ctx){
+	
 	ctx.beginPath();				//taivaan luonti
 	ctx.fillStyle="lightblue";
 	ctx.rect(0,0,1,0.5);
@@ -223,7 +248,9 @@ function drawBackground(ctx){
     ctx.rect(0.12,-0.1,0.75,1.2);
     ctx.stroke();
     ctx.fill();
-    
+
+
+
 }
 
 
@@ -239,13 +266,10 @@ class Windows{
 		this.location=loc;
 		this.scale=scale;
 		this.properties=properties;
-		this.angles=[];
-		for(let i=1;i<=this.properties.levels;i++){
-			//this.angles[i]=(Math.random()-0.5)*0.2; // in radians
-			// 360 degrees is 2 PI radians
-		}
 	}
+	
 	draw(ctx){
+		
 		ctx.beginPath();
 	
 		ctx.save();
@@ -260,7 +284,7 @@ class Windows{
 		ctx.fill();
 		ctx.translate(0,-0.1);
 		ctx.restore();
-		
+
 	}
 }
 
