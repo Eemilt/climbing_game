@@ -16,7 +16,7 @@ var window_height = 0.09
 
 function main(){
 	let canvas = document.getElementById("myCanvas")
-  let ctx=canvas.getContext("2d");
+  	let ctx=canvas.getContext("2d");
 	
 	canvas.width=SIZE;
 	canvas.height=SIZE;
@@ -54,8 +54,8 @@ var UP = false;
 var DOWN = false;
 
 
+/*
 function onkeydown(e) {
-
   
     if (e.keyCode == 39 && rectX<0.815) { 
       rectX = rectX+ 0.035;
@@ -75,11 +75,8 @@ function onkeydown(e) {
 	} //down arrow*/
 
 	drawScene();
-}
+}*/
 
-
-
-window.addEventListener("keydown", onkeydown);
 
 function animate(){
 	SPEED  += 0.0000002;
@@ -91,7 +88,7 @@ function animate(){
 		wallColor:"Brown",
 		roofColor:"BurlyWood"
       }
-	  
+
 		let sallitturaja = 0.15		//määrittää minkä korkeus arvon jälkeen uusi ikkuna saa spawnata, käytännössä ikkunoiden väli 
 		let mahtuuko = false;  		//tämä pistetään trueksi jos canvakseen mahtuu uusi ikkuna
 		if(OBJECTS.length>0){		//ehdotetaan että spawnaa ainakin jotain jos yhtään ikkunaa ei olekkaan liikenteessä else haarassa
