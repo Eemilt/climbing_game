@@ -28,3 +28,5 @@ Basic valikko
     - sisältää play napin, tarvittaessa settings, (personal high score?)
 
 https://www.youtube.com/watch?v=XYzA_kPWyJ8 collision video
+
+https://www.youtube.com/watch?v=rqEJ7WiLWdo toine collision video parempi!!!
