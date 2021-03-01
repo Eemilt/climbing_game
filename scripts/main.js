@@ -16,7 +16,7 @@ var window_height = 0.09
 
 function main(){
 	let canvas = document.getElementById("myCanvas")
-  let ctx=canvas.getContext("2d");
+  	let ctx=canvas.getContext("2d");
 	
 	canvas.width=SIZE;
 	canvas.height=SIZE;
@@ -34,9 +34,10 @@ function main(){
 	
 }
 
-
-
 function rect(ctx) {
+	
+	move(); //movement
+	
 	ctx.beginPath();
     ctx.lineWidth=0.01;
     ctx.fillStyle="red";
@@ -45,41 +46,36 @@ function rect(ctx) {
     ctx.fill();
 }
 
+//key management
+var keys = new Array();
 
-
-
-var LEFT = false;
-var RIGHT = false;
-var UP = false;
-var DOWN = false;
-
-
-function onkeydown(e) {
-
-  
-    if (e.keyCode == 39 && rectX<0.815) { 
-      rectX = rectX+ 0.035;
-      RIGHT = true;
-    } //right arrow
-    else if (e.keyCode == 37 && rectX>0.134999998) {
-		  rectX = rectX-0.035;
-      LEFT = true;
-    } //left arrow
-    else if (e.keyCode == 38 && rectY>0.022) {
-        rectY = rectY - 0.035;
-      UP = true;
-    } //up arrow
-    else if (e.keyCode == 40 && rectY<0.935) {
-        rectY = rectY + 0.035;
-      DOWN = true;
-	} //down arrow*/
-
-	drawScene();
+function keyDown(e){
+	keys[e.keyCode] = true;
+}
+function keyUp(e){
+	keys[e.keyCode] = false;
+}
+function move(){
+	if (38 in keys && keys[38] && rectY>0.022){ //up
+		rectY -= 0.025;
+	}
+	if (40 in keys && keys[40] && rectY<0.935){ //down
+		rectY += 0.025;
+	}
+	if (37 in keys && keys[37] && rectX>0.134999998){ //left
+		rectX -= 0.025;
+	}
+	if (39 in keys && keys[39] && rectX<0.815){ //right
+		rectX += 0.025;
+	}
 }
 
 
+//listeners
+window.addEventListener('keydown',keyDown,true);
+window.addEventListener('keyup',keyUp,true);
 
-window.addEventListener("keydown", onkeydown);
+
 
 function animate(){
 	SPEED  += 0.0000002;
