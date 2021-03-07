@@ -40,37 +40,19 @@ function main(){
 	//ctx.scale(SIZE*0.5,SIZE*0.5);
 	//ctx.translate(0.5,0.5);
     drawScene();
-	animate();
+	//animate();
 	
 	//setInterval(animate,100); // every 100 ms, 10 frames per second
 	//setTimeout();// try this if interested	
 
 
 }
-/*
-function hamis(ctx) {
 
-	hamis_1.addEventListener("load",function(){
-
-		let canvas = document.getElementById("myCanvas")
-		  let ctx=canvas.getContext("2d");
-		ctx.drawImage(hamis_1,0,0,250,250);
-		console.log("taalla2");
-	});
-}
-*/
 function rect(ctx) {
 	move(); //movement
 	x = Math.floor(Math.random() * 3); 
     ctx.drawImage(hamis_array[x],rectX,rectY, 0.05, 0.05);
-    /*
-	ctx.beginPath();	
-	ctx.lineWidth=0.01;	
-	ctx.fillStyle = "red";
-	ctx.rect(rectX,rectY,0.05,0.05);		
-	ctx.stroke();
-	ctx.fill();
-	*/
+
 }
 
 
@@ -88,16 +70,16 @@ function move(){
 	
 	if (38 in keys && keys[38] && rectY>0.022){ //up
 		
-		rectY -= 0.025;
+		rectY -= 0.01;
 	}
 	if (40 in keys && keys[40] && rectY<0.935){ //down
-		rectY += 0.025;
+		rectY += 0.01;
 	}
 	if (37 in keys && keys[37] && rectX>0.134999998){ //left
-		rectX -= 0.025;
+		rectX -= 0.01;
 	}
 	if (39 in keys && keys[39] && rectX<0.815){ //right
-		rectX += 0.025;
+		rectX += 0.01;
 	}
 }
 
@@ -176,6 +158,7 @@ function drawScene(){
 
 	drawBackground(ctx);
 	rect(ctx);
+	score(ctx);
 	
 		for(let i=0;i<OBJECTS.length;i++){
     		OBJECTS[i].draw(ctx);
