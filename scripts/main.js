@@ -7,44 +7,73 @@ var rectX = 0.45;
 var rectY = 0.9;
 
 
-
 var window_x_position = 0.45;
 var window_y_position= 0.5
 var window_width = 0.15
 var window_height = 0.09
 
+const hamis_1 = new Image();
+hamis_1.src = "SpiderImages/hamis1.png";
+
+const hamis_2 = new Image();
+hamis_2.src = "SpiderImages/hamis2.png";
+
+const hamis_3 = new Image();
+hamis_3.src = "SpiderImages/hamis3.png";
+
+hamis_array = [];
+hamis_array.push(hamis_1);
+hamis_array.push(hamis_2);
+hamis_array.push(hamis_3);
+
 
 function main(){
+	
 	let canvas = document.getElementById("myCanvas")
   	let ctx=canvas.getContext("2d");
 	
 	canvas.width=SIZE;
 	canvas.height=SIZE;
-	
+
 	ctx.scale(SIZE,SIZE);
 	//trick to see outside the canvas
 	//ctx.scale(SIZE*0.5,SIZE*0.5);
 	//ctx.translate(0.5,0.5);
-	
     drawScene();
 	animate();
 	
 	//setInterval(animate,100); // every 100 ms, 10 frames per second
-	//setTimeout();// try this if interested
-	
+	//setTimeout();// try this if interested	
+
+
+}
+/*
+function hamis(ctx) {
+
+	hamis_1.addEventListener("load",function(){
+
+		let canvas = document.getElementById("myCanvas")
+		  let ctx=canvas.getContext("2d");
+		ctx.drawImage(hamis_1,0,0,250,250);
+		console.log("taalla2");
+	});
+}
+*/
+function rect(ctx) {
+	move(); //movement
+	x = Math.floor(Math.random() * 3); 
+    ctx.drawImage(hamis_array[x],rectX,rectY, 0.05, 0.05);
+    /*
+	ctx.beginPath();	
+	ctx.lineWidth=0.01;	
+	ctx.fillStyle = "red";
+	ctx.rect(rectX,rectY,0.05,0.05);		
+	ctx.stroke();
+	ctx.fill();
+	*/
 }
 
-function rect(ctx) {
-	
-	move(); //movement
-	
-	ctx.beginPath();
-    ctx.lineWidth=0.01;
-    ctx.fillStyle="red";
-    ctx.rect(rectX,rectY,0.05,0.05);
-    ctx.stroke();
-    ctx.fill();
-}
+
 
 //key management
 var keys = new Array();
@@ -56,7 +85,9 @@ function keyUp(e){
 	keys[e.keyCode] = false;
 }
 function move(){
+	
 	if (38 in keys && keys[38] && rectY>0.022){ //up
+		
 		rectY -= 0.025;
 	}
 	if (40 in keys && keys[40] && rectY<0.935){ //down
@@ -76,9 +107,10 @@ window.addEventListener('keydown',keyDown,true);
 window.addEventListener('keyup',keyUp,true);
 
 
-
 function animate(){
+
 	SPEED  += 0.0000002;
+
 	
 	let probabilityxaxis = Math.random() * (0.708 - 0.131) +0.131; // arpoo ikkunan ruutuun
 
@@ -141,9 +173,10 @@ function distance(item1_x, item1_y, item2_x,item2_y ){
 function drawScene(){
 	let canvas = document.getElementById("myCanvas")
 	let ctx=canvas.getContext("2d");
-	
+
 	drawBackground(ctx);
 	rect(ctx);
+	
 		for(let i=0;i<OBJECTS.length;i++){
     		OBJECTS[i].draw(ctx);
     	}
@@ -166,7 +199,6 @@ function drawBackground(ctx){
     ctx.rect(0.12,-0.1,0.75,1.2);
     ctx.stroke();
     ctx.fill();
-    
 }
 
 
