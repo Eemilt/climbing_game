@@ -3,14 +3,16 @@ const SIZE=1000;
 const OBJECTS=[];
 
 let SPEED=0.000001;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
-var rectX = 0.45;
-var rectY = 0.9;
+let rectX = 0.45;
+let rectY = 0.9;
 
 
-var window_x_position = 0.45;
-var window_y_position= 0.5
-var window_width = 0.15
-var window_height = 0.09
+let window_x_position = 0.45;
+let window_y_position= 0.5
+let window_width = 0.15
+let window_height = 0.09
+
+let score = 0;
 
 const hamis_1 = new Image();
 hamis_1.src = "SpiderImages/hamis1.png";
@@ -28,9 +30,14 @@ hamis_array.push(hamis_3);
 
 
 function main(){
+
+	document.querySelector("#start_button").classList.toggle("hide"); 
+	document.querySelector("#menu").classList.toggle("hide");
+
 	
 	let canvas = document.getElementById("myCanvas")
   	let ctx=canvas.getContext("2d");
+
 	
 	canvas.width=SIZE;
 	canvas.height=SIZE;
@@ -40,7 +47,7 @@ function main(){
 	//ctx.scale(SIZE*0.5,SIZE*0.5);
 	//ctx.translate(0.5,0.5);
     drawScene();
-	//animate();
+	animate();
 	
 	//setInterval(animate,100); // every 100 ms, 10 frames per second
 	//setTimeout();// try this if interested	
@@ -51,7 +58,7 @@ function main(){
 function rect(ctx) {
 	move(); //movement
 	x = Math.floor(Math.random() * 3); 
-    ctx.drawImage(hamis_array[x],rectX,rectY, 0.05, 0.05);
+    ctx.drawImage(hamis_array[x],rectX,rectY, 0.05, 0.05); //arvotaan joku hämis kuvista
 
 }
 
@@ -92,7 +99,9 @@ window.addEventListener('keyup',keyUp,true);
 function animate(){
 
 	SPEED  += 0.0000002;
-
+	score += 1;
+	
+	document.getElementById("score_amount").textContent = score;
 	
 	let probabilityxaxis = Math.random() * (0.708 - 0.131) +0.131; // arpoo ikkunan ruutuun
 
@@ -158,7 +167,7 @@ function drawScene(){
 
 	drawBackground(ctx);
 	rect(ctx);
-	score(ctx);
+	
 	
 		for(let i=0;i<OBJECTS.length;i++){
     		OBJECTS[i].draw(ctx);
