@@ -5,19 +5,21 @@
         <script src="scripts/main.js"></script>
     </head>
 
-    <body>
+    <body onload = "hide_game_over()">
+        
+        
+        <div id= "game_over" >
+            <h1>GAME OVER (tähä joku hieno teksti!!)</h1>
+        </div>
         <div id ="menu">
             <button id="start_button" onclick="main()">Start</button>
         </div>
 
         <canvas id="myCanvas"></canvas>
-        
-        
-        
-    
-        <p id = "score">Score:
-            <span id ="score_amount">0</span>
-        </p>
+           
+            <p id = "score">Score:
+                <span id ="score_amount">0</span>
+            </p>
   
 
     </body>

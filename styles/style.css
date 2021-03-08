@@ -61,7 +61,8 @@ canvas{
     position: fixed;
     left: 47%;
     top: 50%;
-    padding:1%
+    padding:1%;
+    cursor: pointer;
     
 }
 #menu.hide,
@@ -69,3 +70,18 @@ canvas{
     display:none;
 }
    
+#game_over{
+    top:15%;
+    left:40%;
+    z-index: 3;
+    position : fixed;
+    display : flex;
+    color: red;
+    
+}
+
+#game_over.hide{
+    display:none;
+
+}
+

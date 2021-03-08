@@ -1,6 +1,6 @@
 
 const SIZE=1000;
-const OBJECTS=[];
+let OBJECTS=[];
 
 let SPEED=0.000001;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
 let rectX = 0.45;
@@ -27,16 +27,29 @@ hamis_array = [];
 hamis_array.push(hamis_1);
 hamis_array.push(hamis_2);
 hamis_array.push(hamis_3);
+let doAnim = true;
+
+
+
 
 
 function main(){
 
 	document.querySelector("#start_button").classList.toggle("hide"); 
 	document.querySelector("#menu").classList.toggle("hide");
-
+	document.querySelector("#game_over").classList.toggle("hide");
+	
 	
 	let canvas = document.getElementById("myCanvas")
   	let ctx=canvas.getContext("2d");
+	
+	//Reset 
+	doAnim = true;
+	rectX = 0.45;
+	rectY = 0.9;
+	OBJECTS = [];
+	SPEED=0.000001; 
+	score = 0;
 
 	
 	canvas.width=SIZE;
@@ -130,7 +143,12 @@ function animate(){
 		OBJECTS[i].window_y_position+=SPEED;
 
 			if(rectX + 0.05 +0.01 >= OBJECTS[i].window_x_position && rectX <= OBJECTS[i].window_x_position+window_width +0.01 && rectY + 0.05 +0.01  >= OBJECTS[i].window_y_position && rectY<=OBJECTS[i].window_y_position+window_height +0.01){
-					console.log("OSU PERK*LE!")
+					doAnim = false;
+					document.querySelector("#start_button").classList.toggle("hide"); 
+					document.querySelector("#menu").classList.toggle("hide");
+					document.querySelector("#game_over").classList.toggle("hide");
+				
+
 			}
 		
 		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
@@ -147,6 +165,11 @@ function animate(){
 		return a.scale-b.scale;
 	});
 	
+	if (!doAnim){
+		ctx = null;
+		return;
+	}
+
 	drawScene();
 	window.requestAnimationFrame(animate);			//tällä loopataan vissiin animaatio
 }
@@ -164,7 +187,6 @@ function distance(item1_x, item1_y, item2_x,item2_y ){
 function drawScene(){
 	let canvas = document.getElementById("myCanvas")
 	let ctx=canvas.getContext("2d");
-
 	drawBackground(ctx);
 	rect(ctx);
 	
