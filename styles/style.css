@@ -71,6 +71,9 @@ canvas{
 }
    
 #game_over{
+    font-family: 'DotGothic16', sans-serif;
+    font-weight: bold;
+    font-size: 1em;
     top:15%;
     left:40%;
     z-index: 3;

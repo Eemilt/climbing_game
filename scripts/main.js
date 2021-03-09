@@ -71,7 +71,7 @@ function main(){
 function rect(ctx) {
 	move(); //movement
 	x = Math.floor(Math.random() * 3); 
-    ctx.drawImage(hamis_array[x],rectX,rectY, 0.05, 0.05); //arvotaan joku hämis kuvista
+    ctx.drawImage(hamis_array[x],rectX,rectY, 0.06, 0.06); //arvotaan joku hämis kuvista
 
 }
 
@@ -138,18 +138,24 @@ function animate(){
 		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
 			OBJECTS.push(new Windows(probabilityxaxis, -0.1, properties));
 		}
+		
+
 	
 	for(let i=0;i<OBJECTS.length;i++){
 		OBJECTS[i].window_y_position+=SPEED;
 
-			if(rectX + 0.05 +0.01 >= OBJECTS[i].window_x_position && rectX <= OBJECTS[i].window_x_position+window_width +0.01 && rectY + 0.05 +0.01  >= OBJECTS[i].window_y_position && rectY<=OBJECTS[i].window_y_position+window_height +0.01){
+			if(rectX + 0.06 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
+				rectX <= OBJECTS[i].window_x_position+window_width /*RIGHT_WINDOW*/ && 
+				rectY + 0.06  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
+				rectY<=OBJECTS[i].window_y_position+window_height -0.0005 /*BOTTOM_WINDOW*/){
+
 					doAnim = false;
 					document.querySelector("#start_button").classList.toggle("hide"); 
 					document.querySelector("#menu").classList.toggle("hide");
 					document.querySelector("#game_over").classList.toggle("hide");
-				
 
 			}
+		
 		
 		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
 			OBJECTS.splice(i,1); // removing 1 element at index i
@@ -157,6 +163,7 @@ function animate(){
 			i--;
 		}
 		
+	
 	}
 	
 	
