@@ -206,10 +206,10 @@ function window_animate(){
 	for(let i=0;i<OBJECTS.length;i++){
 		OBJECTS[i].window_y_position+=SPEED;
 		
-		if(rectX + 0.04 >= OBJECTS[0].window_x_position /*LEFT_WINDOW*/ && 
-			rectX <= OBJECTS[0].window_x_position+window_width-0.02 /*RIGHT_WINDOW*/ && 
-			rectY + 0.05  >= OBJECTS[0].window_y_position /*TOP_WINDOW */&& 
-			rectY<=OBJECTS[0].window_y_position+window_height -0.01 /*BOTTOM_WINDOW*/){
+		if(rectX + 0.04 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
+			rectX <= OBJECTS[i].window_x_position+window_width-0.02 /*RIGHT_WINDOW*/ && 
+			rectY + 0.05  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
+			rectY<=OBJECTS[i].window_y_position+window_height -0.01 /*BOTTOM_WINDOW*/){
 				
 				doAnim = false;
 				document.querySelector("#start_button").classList.toggle("hide"); 
