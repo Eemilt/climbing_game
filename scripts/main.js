@@ -3,7 +3,7 @@ const SIZE=1000;
 let OBJECTS=[];
 let HAWKS =[];
 
-let SPEED=0.000001;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
+let SPEED=0.0004;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
 let rectX = 0.45;
 let rectY = 0.9;
 
@@ -17,7 +17,7 @@ let hawk_x_position = 0;
 let hawk_y_position =0;
 
 let score = 0;
-
+let sky = 0.5;
 const hamis_1 = new Image();
 hamis_1.src = "SpiderImages/hamis1.png";
 
@@ -32,6 +32,9 @@ hawk_image_left.src ="HawkImages/haukka.png"
 
 const hawk_image_right = new Image();
 hawk_image_right.src ="HawkImages/haukkareverse.png"
+
+const rock = new Image();
+rock.src ="RockImages/rock.png"
 
 
 
@@ -60,8 +63,9 @@ function main(){
 	rectX = 0.45;
 	rectY = 0.9;
 	OBJECTS = [];
-	SPEED=0.000001; 
+	SPEED=0.0004; 
 	score = 0;
+	sky = 0.5;
 
 	
 	canvas.width=SIZE;
@@ -127,9 +131,11 @@ window.addEventListener('keyup',keyUp,true);
 function animate(){
 
 	SPEED  += 0.0000002;
-	score += 1;
+	score += 1
+	sky += 0.0001;
 	
-	document.getElementById("score_amount").textContent = score;
+	
+	document.getElementById("score_amount").textContent =score;
 	
 	let probabilityxaxis = Math.random() * (0.708 - 0.131) +0.131; // arpoo ikkunan ruutuun
 	hawk_animate();
@@ -159,36 +165,29 @@ function animate(){
 	
 	for(let i=0;i<OBJECTS.length;i++){
 		OBJECTS[i].window_y_position+=SPEED;
-
-			if(rectX + 0.06 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
-				rectX <= OBJECTS[i].window_x_position+window_width /*RIGHT_WINDOW*/ && 
-				rectY + 0.06  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
-				rectY<=OBJECTS[i].window_y_position+window_height -0.0005 /*BOTTOM_WINDOW*/){
-
-					doAnim = false;
-					document.querySelector("#start_button").classList.toggle("hide"); 
-					document.querySelector("#menu").classList.toggle("hide");
-					document.querySelector("#game_over").classList.toggle("hide");
-
-			}
 		
+				
+		if(rectX + 0.06 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
+			rectX <= OBJECTS[i].window_x_position+window_width /*RIGHT_WINDOW*/ && 
+			rectY + 0.06  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
+			rectY<=OBJECTS[i].window_y_position+window_height -0.0005 /*BOTTOM_WINDOW*/){
+				
+				doAnim = false;
+				document.querySelector("#start_button").classList.toggle("hide"); 
+				document.querySelector("#menu").classList.toggle("hide");
+				document.querySelector("#game_over").classList.toggle("hide");
+
+		}
+	
 		
 		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
 			OBJECTS.splice(i,1); // removing 1 element at index i
 			/*console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");*/
 			i--;
 		}
-
-
-		
-	
 	}
 	
-	
-  // sort to draw smaller objects first
-	OBJECTS.sort(function(a,b){
-		return a.scale-b.scale;
-	});
+
 	
 	if (!doAnim){
 		ctx = null;
@@ -207,7 +206,7 @@ function hawk_animate(){
 	let left_or_right = Math.floor(Math.random() * 2);
 
 
-	if(spawn_probability<0.0005){
+	if(spawn_probability<0.0008){
 		if(left_or_right == 0){
 			HAWKS.push(new hawk(hawk_image_left,-0.1,spawn_height));
 		}
@@ -248,7 +247,7 @@ function distance(item1_x, item1_y, item2_x,item2_y ){
 function drawScene(){
 	let canvas = document.getElementById("myCanvas")
 	let ctx=canvas.getContext("2d");
-	drawBackground(ctx);
+	drawBackground(ctx,sky);
 	spider(ctx);
 	
 	
@@ -256,18 +255,23 @@ function drawScene(){
 		for(let i=0;i<OBJECTS.length;i++){
     		OBJECTS[i].draw(ctx);
     	}
+
+
     }
 
-function drawBackground(ctx){
-	ctx.beginPath();				//taivaan luonti
-	ctx.fillStyle="lightblue";
-	ctx.rect(0,0,1,0.5);
-	ctx.fill();
+function drawBackground(ctx,sky){
+
 	
 	ctx.beginPath();			//vihreän maan luonti
 	ctx.fillStyle="green";
 	ctx.rect(0,0.5,1,0.5);
     ctx.fill();
+	
+
+	ctx.beginPath();				//taivaan luonti
+	ctx.fillStyle="lightblue";
+	ctx.rect(0,0,1,sky);
+	ctx.fill();
 
 	for(let i=0;i<HAWKS.length;i++){
 		HAWKS[i].draw(ctx);
@@ -279,6 +283,8 @@ function drawBackground(ctx){
     ctx.rect(0.12,-0.1,0.75,1.2);
     ctx.stroke();
     ctx.fill();
+
+
 }
 
 
@@ -296,11 +302,8 @@ class Windows{
 		this.window_x_position=window_x_position;
 		this.window_y_position=window_y_position;
 		this.properties=properties;
-		this.angles=[];
-		for(let i=1;i<=this.properties.levels;i++){
-			//this.angles[i]=(Math.random()-0.5)*0.2; // in radians
-			// 360 degrees is 2 PI radians
-		}
+		
+
 	}
 	draw(ctx){
 	ctx.beginPath();
