@@ -136,59 +136,10 @@ function animate(){
 	
 	
 	document.getElementById("score_amount").textContent =score;
-	
-	let probabilityxaxis = Math.random() * (0.708 - 0.131) +0.131; // arpoo ikkunan ruutuun
 	hawk_animate();
-	properties={
-		levels:1,
-		wallColor:"Brown",
-		roofColor:"BurlyWood"
-      }
-	  
-		let sallitturaja = 0.15		//määrittää minkä korkeus arvon jälkeen uusi ikkuna saa spawnata, käytännössä ikkunoiden väli 
-		let mahtuuko = false;  		//tämä pistetään trueksi jos canvakseen mahtuu uusi ikkuna
-		if(OBJECTS.length>0){		//ehdotetaan että spawnaa ainakin jotain jos yhtään ikkunaa ei olekkaan liikenteessä else haarassa
-			//(OBJECTS[OBJECTS.length-1].location[1])
-			if(OBJECTS[OBJECTS.length-1].window_y_position>sallitturaja){		//taulukon vika alkio on aina näemmä "ylin" ja sen korkeuden tarkastelu riittää päättämään voiko uuden ikkunan asettaa
-				mahtuuko= true;
-			}
-		}else{
-			mahtuuko=true;
-		}
-			
-		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
-			OBJECTS.push(new Windows(probabilityxaxis, -0.1, properties));
-		}
-	
+	window_animate();
 
 
-	
-	for(let i=0;i<OBJECTS.length;i++){
-		OBJECTS[i].window_y_position+=SPEED;
-		
-				
-		if(rectX + 0.06 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
-			rectX <= OBJECTS[i].window_x_position+window_width /*RIGHT_WINDOW*/ && 
-			rectY + 0.06  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
-			rectY<=OBJECTS[i].window_y_position+window_height -0.0005 /*BOTTOM_WINDOW*/){
-				
-				doAnim = false;
-				document.querySelector("#start_button").classList.toggle("hide"); 
-				document.querySelector("#menu").classList.toggle("hide");
-				document.querySelector("#game_over").classList.toggle("hide");
-
-		}
-	
-		
-		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
-			OBJECTS.splice(i,1); // removing 1 element at index i
-			/*console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");*/
-			i--;
-		}
-	}
-	
-
-	
 	if (!doAnim){
 		ctx = null;
 		return;
@@ -229,6 +180,51 @@ function hawk_animate(){
 			HAWKS.splice(i,1);  
 		}
 	}
+
+}
+
+function window_animate(){
+
+	let probabilityxaxis = Math.random() * (0.708 - 0.131) +0.131; // arpoo ikkunan ruutuun
+	
+		let sallitturaja = 0.15		//määrittää minkä korkeus arvon jälkeen uusi ikkuna saa spawnata, käytännössä ikkunoiden väli 
+		let mahtuuko = false;  		//tämä pistetään trueksi jos canvakseen mahtuu uusi ikkuna
+		if(OBJECTS.length>0){		//ehdotetaan että spawnaa ainakin jotain jos yhtään ikkunaa ei olekkaan liikenteessä else haarassa
+			//(OBJECTS[OBJECTS.length-1].location[1])
+			if(OBJECTS[OBJECTS.length-1].window_y_position>sallitturaja){		//taulukon vika alkio on aina näemmä "ylin" ja sen korkeuden tarkastelu riittää päättämään voiko uuden ikkunan asettaa
+				mahtuuko= true;
+			}
+		}else{
+			mahtuuko=true;
+		}
+			
+		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
+			OBJECTS.push(new Windows(probabilityxaxis, -0.1));
+		}
+	
+	
+	for(let i=0;i<OBJECTS.length;i++){
+		OBJECTS[i].window_y_position+=SPEED;
+		
+				
+		if(rectX + 0.06 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
+			rectX <= OBJECTS[i].window_x_position+window_width /*RIGHT_WINDOW*/ && 
+			rectY + 0.06  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
+			rectY<=OBJECTS[i].window_y_position+window_height -0.0005 /*BOTTOM_WINDOW*/){
+				
+				doAnim = false;
+				document.querySelector("#start_button").classList.toggle("hide"); 
+				document.querySelector("#menu").classList.toggle("hide");
+				document.querySelector("#game_over").classList.toggle("hide");
+
+		}	
+		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
+			OBJECTS.splice(i,1); // removing 1 element at index i
+			/*console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");*/
+			i--;
+		}
+	}
+	
 
 }
 
@@ -298,10 +294,10 @@ function getRandomColor(){
 
 
 class Windows{
-	constructor(window_x_position, window_y_position, properties){
+	constructor(window_x_position, window_y_position){
 		this.window_x_position=window_x_position;
 		this.window_y_position=window_y_position;
-		this.properties=properties;
+		
 		
 
 	}
