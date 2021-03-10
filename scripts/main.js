@@ -1,6 +1,7 @@
 
 const SIZE=1000;
 let OBJECTS=[];
+let HAWKS =[];
 
 let SPEED=0.000001;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
 let rectX = 0.45;
@@ -12,6 +13,9 @@ let window_y_position= 0.5
 let window_width = 0.15
 let window_height = 0.09
 
+let hawk_x_position = 0;
+let hawk_y_position =0;
+
 let score = 0;
 
 const hamis_1 = new Image();
@@ -22,6 +26,14 @@ hamis_2.src = "SpiderImages/hamis2.png";
 
 const hamis_3 = new Image();
 hamis_3.src = "SpiderImages/hamis3.png";
+
+const hawk_image_left = new Image();
+hawk_image_left.src ="HawkImages/haukka.png"
+
+const hawk_image_right = new Image();
+hawk_image_right.src ="HawkImages/haukkareverse.png"
+
+
 
 hamis_array = [];
 hamis_array.push(hamis_1);
@@ -68,13 +80,16 @@ function main(){
 
 }
 
-function rect(ctx) {
+function spider(ctx) {
 	move(); //movement
 	x = Math.floor(Math.random() * 3); 
     ctx.drawImage(hamis_array[x],rectX,rectY, 0.06, 0.06); //arvotaan joku hämis kuvista
-
 }
-
+/*
+function hawk(ctx){
+	ctx.drawImage(hawk_image, 0.8, 0.8, 0.06, 0.06)
+}
+*/
 
 
 //key management
@@ -117,7 +132,7 @@ function animate(){
 	document.getElementById("score_amount").textContent = score;
 	
 	let probabilityxaxis = Math.random() * (0.708 - 0.131) +0.131; // arpoo ikkunan ruutuun
-
+	hawk_animate();
 	properties={
 		levels:1,
 		wallColor:"Brown",
@@ -138,7 +153,8 @@ function animate(){
 		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
 			OBJECTS.push(new Windows(probabilityxaxis, -0.1, properties));
 		}
-		
+	
+
 
 	
 	for(let i=0;i<OBJECTS.length;i++){
@@ -162,6 +178,8 @@ function animate(){
 			/*console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");*/
 			i--;
 		}
+
+
 		
 	
 	}
@@ -181,6 +199,42 @@ function animate(){
 	window.requestAnimationFrame(animate);			//tällä loopataan vissiin animaatio
 }
 
+function hawk_animate(){
+	
+	let spawn_probability = Math.random();
+	let hawk_speed = 0.002;
+	let spawn_height = (Math.floor(Math.random() * 6))/10;
+	let left_or_right = Math.floor(Math.random() * 2);
+
+
+	if(spawn_probability<0.0005){
+		if(left_or_right == 0){
+			HAWKS.push(new hawk(hawk_image_left,-0.1,spawn_height));
+		}
+		else{
+			HAWKS.push(new hawk(hawk_image_right,1.1,spawn_height));
+		}
+	}
+
+	for(let i=0;i<HAWKS.length;i++){
+		if(HAWKS[i].hawk_image == hawk_image_left){
+			HAWKS[i].hawk_x_position+=hawk_speed;	
+			HAWKS[i].hawk_y_position+=SPEED;
+		}
+		else{
+			HAWKS[i].hawk_x_position-=hawk_speed;	
+			HAWKS[i].hawk_y_position+=SPEED;
+		}
+		
+		if(HAWKS[i].hawk_x_position< -0.4 ||HAWKS[i].hawk_x_position> 1.4){
+			HAWKS.splice(i,1);  
+		}
+	}
+
+}
+
+
+
 /* PYTHAGORAN voiaan kattoo esim ympyräobjektien etäisyyksiä
 
 function distance(item1_x, item1_y, item2_x,item2_y ){
@@ -195,7 +249,8 @@ function drawScene(){
 	let canvas = document.getElementById("myCanvas")
 	let ctx=canvas.getContext("2d");
 	drawBackground(ctx);
-	rect(ctx);
+	spider(ctx);
+	
 	
 	
 		for(let i=0;i<OBJECTS.length;i++){
@@ -213,6 +268,10 @@ function drawBackground(ctx){
 	ctx.fillStyle="green";
 	ctx.rect(0,0.5,1,0.5);
     ctx.fill();
+
+	for(let i=0;i<HAWKS.length;i++){
+		HAWKS[i].draw(ctx);
+	}
 
     ctx.beginPath();			//tässä luodaan "tausta" talon ruskehtava runko joka ei siis liiku
     ctx.lineWidth=0.01;
@@ -254,6 +313,16 @@ class Windows{
 	}
 }
 
+class hawk{
+	constructor(hawk_image,hawk_x_position, hawk_y_position){
+		this.hawk_x_position=hawk_x_position;
+		this.hawk_y_position=hawk_y_position;
+		this.hawk_image = hawk_image;
+	}
+	draw(ctx){
+		ctx.drawImage(this.hawk_image,this.hawk_x_position, this.hawk_y_position, 0.06, 0.06)
+	}
+}
 
 
 main();
