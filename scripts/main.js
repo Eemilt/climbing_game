@@ -50,9 +50,10 @@ let doAnim = true;
 
 function main(){
 
+	var gameover = document.getElementById("game_over");
+	gameover.style.display = "none";
 	document.querySelector("#start_button").classList.toggle("hide"); 
 	document.querySelector("#menu").classList.toggle("hide");
-	document.querySelector("#game_over").classList.toggle("hide");
 	
 	
 	let canvas = document.getElementById("myCanvas")
@@ -210,11 +211,15 @@ function window_animate(){
 			rectX <= OBJECTS[i].window_x_position+window_width-0.02 /*RIGHT_WINDOW*/ && 
 			rectY + 0.05  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
 			rectY<=OBJECTS[i].window_y_position+window_height -0.01 /*BOTTOM_WINDOW*/){
-				
+				var gameover2 = document.getElementById("game_over");
+				if (gameover2.style.display === "none") {
+					gameover2.style.display = "block";
+				} else {
+					gameover2.style.display = "none";
+				}
 				doAnim = false;
 				document.querySelector("#start_button").classList.toggle("hide"); 
 				document.querySelector("#menu").classList.toggle("hide");
-				document.querySelector("#game_over").classList.toggle("hide");
 				
 				
 		}	
