@@ -36,6 +36,9 @@ hawk_image_right.src ="HawkImages/haukkareverse.png"
 const rock = new Image();
 rock.src ="RockImages/rock.png"
 
+const window_image = new Image();
+window_image.src="GameImages/ikkuna_game.png"
+
 
 
 hamis_array = [];
@@ -43,9 +46,6 @@ hamis_array.push(hamis_1);
 hamis_array.push(hamis_2);
 hamis_array.push(hamis_3);
 let doAnim = true;
-
-
-
 
 
 function main(){
@@ -185,7 +185,7 @@ function hawk_animate(){
 
 function window_animate(){
 
-	let probabilityxaxis = Math.random() * (0.708 - 0.131) +0.131; // arpoo ikkunan ruutuun
+	let probabilityxaxis = Math.random() * (0.719 - 0.131) +0.118; // arpoo ikkunan ruutuun
 	
 		let sallitturaja = 0.15		//määrittää minkä korkeus arvon jälkeen uusi ikkuna saa spawnata, käytännössä ikkunoiden väli 
 		let mahtuuko = false;  		//tämä pistetään trueksi jos canvakseen mahtuu uusi ikkuna
@@ -199,30 +199,32 @@ function window_animate(){
 		}
 			
 		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
-			OBJECTS.push(new Windows(probabilityxaxis, -0.1));
+			OBJECTS.push(new Windows(window_image,probabilityxaxis, -0.1));
 		}
 	
 	
 	for(let i=0;i<OBJECTS.length;i++){
 		OBJECTS[i].window_y_position+=SPEED;
 		
-				
-		if(rectX + 0.06 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
-			rectX <= OBJECTS[i].window_x_position+window_width /*RIGHT_WINDOW*/ && 
-			rectY + 0.06  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
-			rectY<=OBJECTS[i].window_y_position+window_height -0.0005 /*BOTTOM_WINDOW*/){
+		if(rectX + 0.04 >= OBJECTS[0].window_x_position /*LEFT_WINDOW*/ && 
+			rectX <= OBJECTS[0].window_x_position+window_width-0.02 /*RIGHT_WINDOW*/ && 
+			rectY + 0.05  >= OBJECTS[0].window_y_position /*TOP_WINDOW */&& 
+			rectY<=OBJECTS[0].window_y_position+window_height -0.01 /*BOTTOM_WINDOW*/){
 				
 				doAnim = false;
 				document.querySelector("#start_button").classList.toggle("hide"); 
 				document.querySelector("#menu").classList.toggle("hide");
 				document.querySelector("#game_over").classList.toggle("hide");
-
+				
+				
 		}	
+		
 		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
 			OBJECTS.splice(i,1); // removing 1 element at index i
-			/*console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");*/
+			//console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");
 			i--;
 		}
+		
 	}
 	
 
@@ -294,22 +296,25 @@ function getRandomColor(){
 
 
 class Windows{
-	constructor(window_x_position, window_y_position){
+	constructor(window_image,window_x_position, window_y_position){
 		this.window_x_position=window_x_position;
 		this.window_y_position=window_y_position;
+		this.window_image=window_image;
 		
 		
 
 	}
 	draw(ctx){
-	ctx.beginPath();
-	ctx.lineWidth=0.02;
-	ctx.fillStyle="lightblue";
-	ctx.rect(this.window_x_position,this.window_y_position,window_width,window_height);
-	ctx.stroke();
-	ctx.fill();
-		
-	}
+		/*
+		ctx.beginPath();
+		ctx.lineWidth=0.02;
+		ctx.fillStyle="lightblue";
+		ctx.rect(this.window_x_position,this.window_y_position,window_width,window_height);
+		ctx.stroke();
+		ctx.fill();
+		*/
+		ctx.drawImage(this.window_image,this.window_x_position,this.window_y_position,window_width,window_height)
+		}
 }
 
 class hawk{
