@@ -48,6 +48,10 @@ hamis_array.push(hamis_3);
 let doAnim = true;
 
 
+var Music;
+
+
+
 function main(){
 
 	var gameover = document.getElementById("game_over");
@@ -58,6 +62,9 @@ function main(){
 	
 	let canvas = document.getElementById("myCanvas")
   	let ctx=canvas.getContext("2d");
+
+	Music = new sound("");
+
 	
 	//Reset 
 	doAnim = true;
@@ -148,7 +155,24 @@ function animate(){
 
 	drawScene();
 	window.requestAnimationFrame(animate);			//tällä loopataan vissiin animaatio
+
+	Music.play();
 }
+
+function sound(src) {
+	this.sound = document.createElement("audio");
+	this.sound.src = src;
+	this.sound.setAttribute("preload", "auto");
+	this.sound.setAttribute("controls", "none");
+	this.sound.style.display = "none";
+	document.body.appendChild(this.sound);
+	this.play = function(){
+	  this.sound.play();
+	}
+	this.stop = function(){
+	  this.sound.pause();
+	}
+  }
 
 function hawk_animate(){
 	
