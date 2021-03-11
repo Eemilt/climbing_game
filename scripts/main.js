@@ -39,6 +39,8 @@ rock.src ="RockImages/rock.png"
 const window_image = new Image();
 window_image.src="GameImages/ikkuna_game.png"
 
+let lightness = 80;
+
 
 
 hamis_array = [];
@@ -74,6 +76,7 @@ function main(){
 	SPEED=0.0004; 
 	score = 0;
 	sky = 0.5;
+	lightness = 80;
 
 	
 	canvas.width=SIZE;
@@ -138,7 +141,7 @@ window.addEventListener('keyup',keyUp,true);
 
 function animate(){
 
-	SPEED  += 0.0000002;
+	SPEED  += 0.0000005;
 	score += 1
 	sky += 0.0001;
 	
@@ -147,6 +150,9 @@ function animate(){
 	hawk_animate();
 	window_animate();
 
+	if(score >5000){
+		lightness -= 0.01;
+	}
 
 	if (!doAnim){
 		ctx = null;
@@ -296,7 +302,7 @@ function drawBackground(ctx,sky){
 	
 
 	ctx.beginPath();				//taivaan luonti
-	ctx.fillStyle="lightblue";
+	ctx.fillStyle=	"hsl(195, 100%, "+ lightness+ "%)";
 	ctx.rect(0,0,1,sky);
 	ctx.fill();
 
