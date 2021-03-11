@@ -92,7 +92,6 @@ function main(){
 	//setInterval(animate,100); // every 100 ms, 10 frames per second
 	//setTimeout();// try this if interested	
 
-
 }
 
 function spider(ctx) {
@@ -100,11 +99,6 @@ function spider(ctx) {
 	x = Math.floor(Math.random() * 3); 
     ctx.drawImage(hamis_array[x],rectX,rectY, 0.06, 0.06); //arvotaan joku hämis kuvista
 }
-/*
-function hawk(ctx){
-	ctx.drawImage(hawk_image, 0.8, 0.8, 0.06, 0.06)
-}
-*/
 
 
 //key management
@@ -120,16 +114,16 @@ function move(){
 	
 	if (38 in keys && keys[38] && rectY>0.022){ //up
 		
-		rectY -= 0.01;
+		rectY -= 0.008;
 	}
 	if (40 in keys && keys[40] && rectY<0.935){ //down
-		rectY += 0.01;
+		rectY += 0.008;
 	}
-	if (37 in keys && keys[37] && rectX>0.134999998){ //left
-		rectX -= 0.01;
+	if (37 in keys && keys[37] && rectX>0.1199){ //left
+		rectX -= 0.008;
 	}
 	if (39 in keys && keys[39] && rectX<0.815){ //right
-		rectX += 0.01;
+		rectX += 0.008;
 	}
 }
 
@@ -320,16 +314,6 @@ function drawBackground(ctx,sky){
 
 }
 
-
-function getRandomColor(){
-	let red=Math.floor(Math.random()*255);
-	let green=Math.floor(Math.random()*255);
-	let blue=Math.floor(Math.random()*255);
-	return "rgba("+red+","+green+","+blue+",1)";
-}
-
-
-
 class Windows{
 	constructor(window_image,window_x_position, window_y_position){
 		this.window_x_position=window_x_position;
@@ -340,14 +324,6 @@ class Windows{
 
 	}
 	draw(ctx){
-		/*
-		ctx.beginPath();
-		ctx.lineWidth=0.02;
-		ctx.fillStyle="lightblue";
-		ctx.rect(this.window_x_position,this.window_y_position,window_width,window_height);
-		ctx.stroke();
-		ctx.fill();
-		*/
 		ctx.drawImage(this.window_image,this.window_x_position,this.window_y_position,window_width,window_height)
 		}
 }
