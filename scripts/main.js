@@ -39,6 +39,9 @@ rock.src ="RockImages/rock.png"
 const window_image = new Image();
 window_image.src="GameImages/ikkuna_game.png"
 
+const cloud_image = new Image();
+cloud_image.src="GameImages/smoke.png"
+
 let lightness = 80;
 
 
@@ -66,7 +69,6 @@ function main(){
   	let ctx=canvas.getContext("2d");
 
 	Music = new sound("");
-
 	
 	//Reset 
 	doAnim = true;
@@ -143,6 +145,9 @@ function animate(){
 	document.getElementById("score_amount").textContent =score;
 	hawk_animate();
 	window_animate();
+
+
+	
 
 	if(score >5000){
 		lightness -= 0.01;
@@ -278,7 +283,6 @@ function drawScene(){
 	spider(ctx);
 	
 	
-	
 		for(let i=0;i<OBJECTS.length;i++){
     		OBJECTS[i].draw(ctx);
     	}
@@ -339,5 +343,18 @@ class hawk{
 	}
 }
 
+class cloud{
+	constructor(cloud_image,cloud_x_position, cloud_y_position,cloud_x_size,cloud_y_size){
+		this.cloud_image = cloud_image;
+		this.cloud_x_position= cloud_x_position;
+		this.cloud_y_position = cloud_y_position;
+		this.cloud_x_size = cloud_x_size;
+		this.cloud_y_size = cloud_y_size;
+	}
+	draw(ctx){
+		ctx.drawImage(this.cloud_image,this.cloud_x_position,this.cloud_y_position,this.cloud_x_size,this.cloud_y_size)
+	}
+
+}
 
 main();
