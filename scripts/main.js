@@ -241,6 +241,7 @@ function window_animate(){
 			rectY + 0.05  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
 			rectY<=OBJECTS[i].window_y_position+window_height -0.01 /*BOTTOM_WINDOW*/){
 				var gameover2 = document.getElementById("game_over");
+				document.getElementById("score_amount_total").textContent = score;
 				if (gameover2.style.display === "none") {
 					gameover2.style.display = "block";
 				} else {

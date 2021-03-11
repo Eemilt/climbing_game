@@ -7,11 +7,18 @@
 
     <body> 
         <div id= "game_over" style="display:none">
-            <h1>GAME OVER (tähä joku hieno teksti!!)</h1>
+            <h1>GAME OVER</h1>
+            <p id = "gamoverscore">
+                <h2>Your score:</h2>
+                <span id ="score_amount_total"></span>
+            </p>
         </div>
         <div id ="menu">
             <button id="start_button" onclick="main()">Start</button>
+            <button id="highscores_button" onclick="">Highscores</button>
         </div>
+
+        
     
         <canvas id="myCanvas"></canvas>  
             <p id = "score">Score:

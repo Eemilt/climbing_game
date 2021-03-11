@@ -44,7 +44,7 @@ canvas{
 }
 
 #menu{
-    position:fixed;
+    position:relative;
     display:flex;
     top:50%;
     left:50%;
@@ -56,28 +56,78 @@ canvas{
     z-index: 2;
 } 
 
+#highscores_button{
+    font-family: 'DotGothic16', sans-serif;
+    font-weight: bold;
+    font-size: 2em;
+
+    display: inline-block;
+    border: 4px solid #3C14D0 ;
+    color: #3C14D0;
+    background: #000000;
+    outline: none;
+
+    
+    position: absolute;
+    left: 45%;
+    top: 59%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding:1%;
+    cursor: pointer;
+    transition: all 0.5s;
+    
+}
+
+#menu.hide,
+#highscores_button.hide{
+    display:none;
+}
+
+#highscores_button:hover{
+    color:#000000;
+    background-color:#fff;
+}
+
 #start_button{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
     font-size: 2em;
-    position: fixed;
+
+    display: inline-block;
+    border: 4px solid #3C14D0 ;
+    color: #3C14D0;
+    background: #000000;
+    outline: none;
+
+    
+    position: absolute;
     left: 47%;
-    top: 50%;
+    top: 47%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
     padding:1%;
     cursor: pointer;
+    transition: all 0.5s;
     
 }
+
 #menu.hide,
 #start_button.hide{
     display:none;
 }
-   
+
+#start_button:hover{
+    color:#000000;
+    background-color:#fff;
+}
+    
 #game_over{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
     font-size: 1em;
     top:15%;
-    left:40%;
+    left:46.5%;
     z-index: 3;
     position : fixed;
     display : flex;
