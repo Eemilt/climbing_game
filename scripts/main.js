@@ -3,7 +3,7 @@ const SIZE=1000;
 let OBJECTS=[];
 let HAWKS =[];
 
-let SPEED=0.0004;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
+let SPEED=0.003;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
 let rectX = 0.45;
 let rectY = 0.9;
 
@@ -75,7 +75,7 @@ function main(){
 	rectX = 0.45;
 	rectY = 0.9;
 	OBJECTS = [];
-	SPEED=0.0004; 
+	SPEED=0.003; 
 	score = 0;
 	sky = 0.5;
 	lightness = 80;
@@ -137,7 +137,7 @@ window.addEventListener('keyup',keyUp,true);
 
 function animate(){
 
-	SPEED  += 0.0000005;
+	SPEED  += 0.0000008;
 	score += 1
 	sky += 0.0001;
 	
