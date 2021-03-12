@@ -2,6 +2,7 @@
 const SIZE=1000;
 let OBJECTS=[];
 let HAWKS =[];
+let CLOUDS =[];
 
 let SPEED=0.003;     //vaikuttaa miten useasti objektin sijainti paivittyy eli toisinsanoen kuinka nopeasti ikkunat tulee vastaan
 let rectX = 0.45;
@@ -18,6 +19,10 @@ let hawk_y_position =0;
 
 let score = 0;
 let sky = 0.5;
+let counter =0;
+let doublepoints = false;
+let seconds = 0;
+
 const hamis_1 = new Image();
 hamis_1.src = "SpiderImages/hamis1.png";
 
@@ -41,6 +46,9 @@ window_image.src="GameImages/ikkuna_game.png"
 
 const cloud_image = new Image();
 cloud_image.src="GameImages/smoke.png"
+
+const star_image = new Image();
+star_image.src="GameImages/tahti.png"
 
 let lightness = 80;
 
@@ -79,6 +87,10 @@ function main(){
 	score = 0;
 	sky = 0.5;
 	lightness = 80;
+	counter=0;
+	doublepoints = false;
+	seconds = 0;
+	console.log(doublepoints);
 
 	
 	canvas.width=SIZE;
@@ -138,19 +150,31 @@ window.addEventListener('keyup',keyUp,true);
 function animate(){
 
 	SPEED  += 0.0000008;
-	score += 1
+	if(doublepoints == true){
+		score += 2
+		//console.log("TAALLA");
+		//var cancel = setInterval(second_counter, 1000);
+		//console.log(cancel);
+
+	}else{
+		score += 1
+	}
+	counter +=1;
 	sky += 0.0005;
-	
 	
 	document.getElementById("score_amount").textContent =score;
 	hawk_animate();
 	window_animate();
 
-
 	
 
-	if(score >2000){
+	if(counter >2000){
 		lightness -= 0.01;
+	}
+
+	if(counter>3000){ //pilville
+		//cloud_animate();
+
 	}
 
 	if (!doAnim){
@@ -161,7 +185,7 @@ function animate(){
 	drawScene();
 	window.requestAnimationFrame(animate);			//tällä loopataan vissiin animaatio
 
-	Music.play();
+	//Music.play();
 }
 
 function sound(src) {
@@ -178,7 +202,13 @@ function sound(src) {
 	  this.sound.pause();
 	}
   }
-
+/*
+function second_counter(){
+	seconds +=1;
+	console.log(seconds);
+	return seconds;
+}
+*/
 function hawk_animate(){
 	
 	let spawn_probability = Math.random();
@@ -187,7 +217,7 @@ function hawk_animate(){
 	let left_or_right = Math.floor(Math.random() * 2);
 
 
-	if(spawn_probability<0.008){
+	if(spawn_probability<0.004){
 		if(left_or_right == 0){
 			HAWKS.push(new hawk(hawk_image_left,-0.1,spawn_height));
 		}
@@ -229,14 +259,24 @@ function window_animate(){
 		}
 			
 		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
-			OBJECTS.push(new Windows(window_image,probabilityxaxis, -0.1));
+			//OBJECTS.push(new Windows(window_image,probabilityxaxis, -0.1));
+			let spawn_probability = Math.random();
+			if(spawn_probability<0.05){
+				OBJECTS.push(new Windows(star_image,probabilityxaxis, -0.1,0.07,0.07));
+				//console.log(OBJECTS[0].star_y_position);
+				
+			}else{
+				OBJECTS.push(new Windows(window_image,probabilityxaxis, -0.1,0.15,0.09));		
+			}
+
 		}
 	
-	
+
 	for(let i=0;i<OBJECTS.length;i++){
 		OBJECTS[i].window_y_position+=SPEED;
-		
-		if(rectX + 0.04 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
+
+		if(OBJECTS[i].window_image == window_image &&
+			rectX + 0.04 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
 			rectX <= OBJECTS[i].window_x_position+window_width-0.02 /*RIGHT_WINDOW*/ && 
 			rectY + 0.05  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
 			rectY<=OBJECTS[i].window_y_position+window_height -0.01 /*BOTTOM_WINDOW*/){
@@ -249,20 +289,29 @@ function window_animate(){
 				}
 				doAnim = false;
 				document.querySelector("#start_button").classList.toggle("hide"); 
-				document.querySelector("#menu").classList.toggle("hide");
-				
-				
+				document.querySelector("#menu").classList.toggle("hide");		
 		}	
 		
-		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
+
+		if(OBJECTS[0].window_image == star_image &&
+			rectX + 0.04 >= OBJECTS[0].window_x_position /*LEFT_WINDOW*/ && 
+			rectX <= OBJECTS[0].window_x_position+window_width-0.1 /*RIGHT_WINDOW*/ && 
+			rectY + 0.05  >= OBJECTS[0].window_y_position /*TOP_WINDOW */&& 
+			rectY<=OBJECTS[0].window_y_position+window_height -0.04 /*BOTTOM_WINDOW*/){
+				doublepoints=true;
+			}
+		
+		if(OBJECTS[0].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
 			OBJECTS.splice(i,1); // removing 1 element at index i
 			//console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");
 			i--;
 		}
 		
 	}
-	
+}
 
+function cloud_animate(){
+	CLOUDS.push(new cloud(cloud_image,0.1,0.5,0.05,0.05))
 }
 
 
@@ -282,10 +331,14 @@ function drawScene(){
 	let ctx=canvas.getContext("2d");
 	drawBackground(ctx,sky);
 	spider(ctx);
-	
+
+	//let ses = (new cloud(cloud_image,0.05,0.1,0.2,0.2));
+	//ses.draw(ctx);
+
 	
 		for(let i=0;i<OBJECTS.length;i++){
     		OBJECTS[i].draw(ctx);
+			//console.log(OBJECTS);
     	}
 
 
@@ -320,16 +373,18 @@ function drawBackground(ctx,sky){
 }
 
 class Windows{
-	constructor(window_image,window_x_position, window_y_position){
+	constructor(window_image,window_x_position, window_y_position,window_width,window_height){
 		this.window_x_position=window_x_position;
 		this.window_y_position=window_y_position;
 		this.window_image=window_image;
+		this.window_width=window_width;
+		this.window_height = window_height;
 		
 		
 
 	}
 	draw(ctx){
-		ctx.drawImage(this.window_image,this.window_x_position,this.window_y_position,window_width,window_height)
+		ctx.drawImage(this.window_image,this.window_x_position,this.window_y_position,this.window_width,this.window_height)
 		}
 }
 
@@ -355,7 +410,18 @@ class cloud{
 	draw(ctx){
 		ctx.drawImage(this.cloud_image,this.cloud_x_position,this.cloud_y_position,this.cloud_x_size,this.cloud_y_size)
 	}
+}
 
+
+class star{
+	constructor(star_image,star_x_position, star_y_position){
+		this.star_x_position=star_x_position;
+		this.star_y_position=star_y_position;
+		this.star_image = star_image;
+	}
+	draw(ctx){
+		ctx.drawImage(this.star_image,this.star_x_position, this.star_y_position, 0.06, 0.06)
+	}
 }
 
 main();
