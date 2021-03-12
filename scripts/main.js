@@ -139,7 +139,7 @@ function animate(){
 
 	SPEED  += 0.0000008;
 	score += 1
-	sky += 0.0001;
+	sky += 0.0005;
 	
 	
 	document.getElementById("score_amount").textContent =score;
@@ -149,7 +149,7 @@ function animate(){
 
 	
 
-	if(score >5000){
+	if(score >2000){
 		lightness -= 0.01;
 	}
 
@@ -187,7 +187,7 @@ function hawk_animate(){
 	let left_or_right = Math.floor(Math.random() * 2);
 
 
-	if(spawn_probability<0.0008){
+	if(spawn_probability<0.008){
 		if(left_or_right == 0){
 			HAWKS.push(new hawk(hawk_image_left,-0.1,spawn_height));
 		}
@@ -199,11 +199,11 @@ function hawk_animate(){
 	for(let i=0;i<HAWKS.length;i++){
 		if(HAWKS[i].hawk_image == hawk_image_left){
 			HAWKS[i].hawk_x_position+=hawk_speed;	
-			HAWKS[i].hawk_y_position+=SPEED;
+			HAWKS[i].hawk_y_position+=SPEED/2.5;
 		}
 		else{
 			HAWKS[i].hawk_x_position-=hawk_speed;	
-			HAWKS[i].hawk_y_position+=SPEED;
+			HAWKS[i].hawk_y_position+=SPEED/2;
 		}
 		
 		if(HAWKS[i].hawk_x_position< -0.4 ||HAWKS[i].hawk_x_position> 1.4){
