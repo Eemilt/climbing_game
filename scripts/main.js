@@ -21,7 +21,8 @@ let score = 0;
 let sky = 0.5;
 let counter =0;
 let doublepoints = false;
-let seconds = 0;
+let old_score = true;
+let remember_score =0;
 
 const hamis_1 = new Image();
 hamis_1.src = "SpiderImages/hamis1.png";
@@ -89,7 +90,8 @@ function main(){
 	lightness = 80;
 	counter=0;
 	doublepoints = false;
-	seconds = 0;
+	old_score = true;
+	remember_score = 0;
 	console.log(doublepoints);
 
 	
@@ -152,13 +154,20 @@ function animate(){
 	SPEED  += 0.0000008;
 	if(doublepoints == true){
 		score += 2
-		//console.log("TAALLA");
-		//var cancel = setInterval(second_counter, 1000);
-		//console.log(cancel);
+		if(old_score == true){ //2500 points is maximum 
+			old_score = false;
+			remember_score = score;		
+			
+		}
 
+		if(score-remember_score == 2500){
+			old_score = true;
+			doublepoints =false		
+		}
 	}else{
 		score += 1
 	}
+
 	counter +=1;
 	sky += 0.0005;
 	
@@ -202,13 +211,7 @@ function sound(src) {
 	  this.sound.pause();
 	}
   }
-/*
-function second_counter(){
-	seconds +=1;
-	console.log(seconds);
-	return seconds;
-}
-*/
+  
 function hawk_animate(){
 	
 	let spawn_probability = Math.random();
@@ -261,7 +264,7 @@ function window_animate(){
 		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
 			//OBJECTS.push(new Windows(window_image,probabilityxaxis, -0.1));
 			let spawn_probability = Math.random();
-			if(spawn_probability<0.05){
+			if(spawn_probability<0.2){
 				OBJECTS.push(new Windows(star_image,probabilityxaxis, -0.1,0.07,0.07));
 				//console.log(OBJECTS[0].star_y_position);
 				
@@ -293,15 +296,16 @@ function window_animate(){
 		}	
 		
 
-		if(OBJECTS[0].window_image == star_image &&
-			rectX + 0.04 >= OBJECTS[0].window_x_position /*LEFT_WINDOW*/ && 
-			rectX <= OBJECTS[0].window_x_position+window_width-0.1 /*RIGHT_WINDOW*/ && 
-			rectY + 0.05  >= OBJECTS[0].window_y_position /*TOP_WINDOW */&& 
-			rectY<=OBJECTS[0].window_y_position+window_height -0.04 /*BOTTOM_WINDOW*/){
+		if(OBJECTS[i].window_image == star_image &&
+			rectX + 0.04 >= OBJECTS[i].window_x_position /*LEFT_WINDOW*/ && 
+			rectX <= OBJECTS[i].window_x_position+window_width-0.1 /*RIGHT_WINDOW*/ && 
+			rectY + 0.05  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
+			rectY<=OBJECTS[i].window_y_position+window_height -0.04 /*BOTTOM_WINDOW*/){
 				doublepoints=true;
+				OBJECTS.splice(i,1);
 			}
 		
-		if(OBJECTS[0].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
+		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
 			OBJECTS.splice(i,1); // removing 1 element at index i
 			//console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");
 			i--;
