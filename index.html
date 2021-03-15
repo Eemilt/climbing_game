@@ -6,12 +6,19 @@
     </head>
 
     <body> 
+
+        <audio id="myAudio">
+            <source src="https://docs.google.com/uc?export=open&id=1_iJwRuPe02XZyPTe_jKS_1AQPUim9FB3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+          
         <div id= "game_over" style="display:none">
             <h1>GAME OVER</h1>
             <p id = "gamoverscore">
                 <h2>Your score:</h2>
                 <span id ="score_amount_total"></span>
             </p>
+        
         </div>
         <div id ="menu">
             <button id="start_button" onclick="main()">Start</button>
