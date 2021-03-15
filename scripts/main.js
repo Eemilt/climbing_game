@@ -181,8 +181,8 @@ function animate(){
 		lightness -= 0.01;
 	}
 
-	if(counter>3000){ //pilville
-		//cloud_animate();
+	if(3500 <counter && counter<7000){ //pilville 3500-7000
+		cloud_animate();
 
 	}
 
@@ -236,7 +236,7 @@ function hawk_animate(){
 		}
 		else{
 			HAWKS[i].hawk_x_position-=hawk_speed;	
-			HAWKS[i].hawk_y_position+=SPEED/2;
+			HAWKS[i].hawk_y_position+=SPEED/2.5;
 		}
 		
 		if(HAWKS[i].hawk_x_position< -0.4 ||HAWKS[i].hawk_x_position> 1.4){
@@ -283,6 +283,7 @@ function window_animate(){
 			rectX <= OBJECTS[i].window_x_position+window_width-0.02 /*RIGHT_WINDOW*/ && 
 			rectY + 0.05  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
 			rectY<=OBJECTS[i].window_y_position+window_height -0.01 /*BOTTOM_WINDOW*/){
+				/*
 				var gameover2 = document.getElementById("game_over");
 				document.getElementById("score_amount_total").textContent = score;
 				if (gameover2.style.display === "none") {
@@ -293,6 +294,7 @@ function window_animate(){
 				doAnim = false;
 				document.querySelector("#start_button").classList.toggle("hide"); 
 				document.querySelector("#menu").classList.toggle("hide");		
+				*/
 		}	
 		
 
@@ -315,7 +317,34 @@ function window_animate(){
 }
 
 function cloud_animate(){
-	CLOUDS.push(new cloud(cloud_image,0.1,0.5,0.05,0.05))
+	let spawn_probability = Math.random();
+	let spawn_height = (Math.floor(Math.random() * 6))/10;
+	let spawn_width = Math.random();
+	let cloud_speed = 0.001;
+	let left_or_right = Math.floor(Math.random() * 2);
+	if(spawn_probability<0.002){
+		if(left_or_right == 0){
+			CLOUDS.push(new cloud(cloud_image,-0.2,spawn_height,0.13,0.13,"left"))
+		}
+		else{
+			CLOUDS.push(new cloud(cloud_image,1.1,spawn_height,0.13,0.13,"right"))
+		}
+	}
+
+	for(let i=0;i<CLOUDS.length;i++){
+		console.log("taalla"+CLOUDS[i].cloud_x_position);	
+		if(CLOUDS[i].cloud_id == "left"){
+			CLOUDS[i].cloud_x_position+=cloud_speed;
+			//CLOUDS[i].cloud_y_position+=SPEED/2.5;
+		}
+		else{
+			CLOUDS[i].cloud_x_position-=cloud_speed;	
+			//CLOUDS[i].cloud_y_position+=SPEED/2.5;
+		}
+
+		
+	}
+
 }
 
 
@@ -342,6 +371,11 @@ function drawScene(){
 	
 		for(let i=0;i<OBJECTS.length;i++){
     		OBJECTS[i].draw(ctx);
+			//console.log(OBJECTS);
+    	}
+			
+		for(let i=0;i<CLOUDS.length;i++){
+    		CLOUDS[i].draw(ctx);
 			//console.log(OBJECTS);
     	}
 
@@ -404,12 +438,13 @@ class hawk{
 }
 
 class cloud{
-	constructor(cloud_image,cloud_x_position, cloud_y_position,cloud_x_size,cloud_y_size){
+	constructor(cloud_image,cloud_x_position, cloud_y_position,cloud_x_size,cloud_y_size,cloud_id){
 		this.cloud_image = cloud_image;
 		this.cloud_x_position= cloud_x_position;
 		this.cloud_y_position = cloud_y_position;
 		this.cloud_x_size = cloud_x_size;
 		this.cloud_y_size = cloud_y_size;
+		this.cloud_id = cloud_id;
 	}
 	draw(ctx){
 		ctx.drawImage(this.cloud_image,this.cloud_x_position,this.cloud_y_position,this.cloud_x_size,this.cloud_y_size)
