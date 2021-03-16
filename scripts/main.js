@@ -82,6 +82,7 @@ function main(){
 	rectX = 0.45;
 	rectY = 0.9;
 	OBJECTS = [];
+	CLOUDS= [];
 	SPEED=0.003; 
 	score = 0;
 	sky = 0.5;
@@ -171,17 +172,29 @@ function animate(){
 	sky += 0.0005;
 	
 	document.getElementById("score_amount").textContent =score;
-	hawk_animate();
 	window_animate();
-	
-
 	if(counter >2000){
-		lightness -= 0.01;
+		lightness -= 0.01; //ehkä 0.015?
 	}
 
-	if(3500 <counter && counter<7000){ //pilville 3500-7000
-		cloud_animate();
 
+	
+	if(counter<3500){
+		spawn_hawk();
+	}
+
+	if(counter>3500 && HAWKS.length != 0){ //preventing hawks to stop middle of the screen
+		move_hawk();
+
+	}
+
+
+	if(3500 <counter && counter<7000){ //pilville 3500-7000
+			spawn_cloud();
+	}
+
+	if(counter >3500 && CLOUDS.length != 0){ //preventing clouds to stop middle of the screen
+		move_cloud();
 	}
 
 	if (!doAnim){
@@ -208,39 +221,7 @@ function sound(src) {
 	}
   }
   
-function hawk_animate(){
-	
-	let spawn_probability = Math.random();
-	let hawk_speed = 0.002;
-	let spawn_height = (Math.floor(Math.random() * 6))/10;
-	let left_or_right = Math.floor(Math.random() * 2);
 
-
-	if(spawn_probability<0.004){
-		if(left_or_right == 0){
-			HAWKS.push(new hawk(hawk_image_left,-0.1,spawn_height));
-		}
-		else{
-			HAWKS.push(new hawk(hawk_image_right,1.1,spawn_height));
-		}
-	}
-
-	for(let i=0;i<HAWKS.length;i++){
-		if(HAWKS[i].hawk_image == hawk_image_left){
-			HAWKS[i].hawk_x_position+=hawk_speed;	
-			HAWKS[i].hawk_y_position+=SPEED/2.5;
-		}
-		else{
-			HAWKS[i].hawk_x_position-=hawk_speed;	
-			HAWKS[i].hawk_y_position+=SPEED/2.5;
-		}
-		
-		if(HAWKS[i].hawk_x_position< -0.4 ||HAWKS[i].hawk_x_position> 1.4){
-			HAWKS.splice(i,1);  
-		}
-	}
-
-}
 
 function window_animate(){
 
@@ -260,7 +241,7 @@ function window_animate(){
 		if(mahtuuko == true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
 			//OBJECTS.push(new Windows(window_image,probabilityxaxis, -0.1));
 			let spawn_probability = Math.random();
-			if(spawn_probability<0.2){
+			if(spawn_probability<0.07){
 				OBJECTS.push(new Windows(star_image,probabilityxaxis, -0.1,0.07,0.07));
 				//console.log(OBJECTS[0].star_y_position);
 				
@@ -279,6 +260,7 @@ function window_animate(){
 			rectX <= OBJECTS[i].window_x_position+window_width-0.02 /*RIGHT_WINDOW*/ && 
 			rectY + 0.05  >= OBJECTS[i].window_y_position /*TOP_WINDOW */&& 
 			rectY<=OBJECTS[i].window_y_position+window_height -0.01 /*BOTTOM_WINDOW*/){
+				
 				var myMusic = document.getElementById("myAudio"); 
 				var gameover2 = document.getElementById("game_over");
 				document.getElementById("score_amount_total").textContent = score;
@@ -304,42 +286,89 @@ function window_animate(){
 				OBJECTS.splice(i,1);
 			}
 		
-		if(OBJECTS[i].window_y_position>1){	//object hävitetään taulukosta kun pysty muuttuja eli location[1] menee suuremmaksi kuin 2.375 eli pois näkymästä (en tiedä vaikuttaako selaimen skaalaus tms tähän valueen, en usko koska suhteellisia arvoja?)
+		if(OBJECTS[i].window_y_position>1){	
 			OBJECTS.splice(i,1); // removing 1 element at index i
-			//console.log("------------ OBJECTS taulukosta poistettu alkio  -------------");
+			
 			i--;
 		}
 		
 	}
 }
 
-function cloud_animate(){
+function spawn_hawk(){
+	
 	let spawn_probability = Math.random();
 	let spawn_height = (Math.floor(Math.random() * 6))/10;
-	let spawn_width = Math.random();
-	let cloud_speed = 0.001;
 	let left_or_right = Math.floor(Math.random() * 2);
-	if(spawn_probability<0.002){
+
+
+	if(spawn_probability<0.004){
 		if(left_or_right == 0){
-			CLOUDS.push(new cloud(cloud_image,-0.2,spawn_height,0.13,0.13,"left"))
+			HAWKS.push(new hawk(hawk_image_left,-0.1,spawn_height));
+		}
+		else{
+			HAWKS.push(new hawk(hawk_image_right,1.1,spawn_height));
+		}
+	}
+
+	move_hawk();
+}
+
+function move_hawk(){
+	let hawk_speed = 0.002;
+	for(let i=0;i<HAWKS.length;i++){
+		if(HAWKS[i].hawk_image == hawk_image_left){
+			HAWKS[i].hawk_x_position+=hawk_speed;	
+			HAWKS[i].hawk_y_position+=SPEED/2.5;
+		}
+		else{
+			HAWKS[i].hawk_x_position-=hawk_speed;	
+			HAWKS[i].hawk_y_position+=SPEED/2.5;
+		}
+		
+		if(HAWKS[i].hawk_x_position< -0.4 ||HAWKS[i].hawk_x_position> 1.4){
+			HAWKS.splice(i,1);  
+		}
+	}
+}
+
+
+
+
+
+function spawn_cloud(){
+	let spawn_probability = Math.random();
+	let spawn_height = (Math.random() * (0.3 - 0.0) + 0.0).toFixed(4)
+	console.log(spawn_height);
+	let spawn_width = Math.random();
+	
+	let left_or_right = Math.floor(Math.random() * 2);
+	if(spawn_probability<0.003){
+		if(left_or_right == 0){
+			CLOUDS.push(new cloud(cloud_image,-0.1,spawn_height,0.13,0.13,"left"))
 		}
 		else{
 			CLOUDS.push(new cloud(cloud_image,1.1,spawn_height,0.13,0.13,"right"))
 		}
 	}
+		move_cloud();
 
+}
+
+function move_cloud(){
+	let cloud_speed = 0.001;
 	for(let i=0;i<CLOUDS.length;i++){
-		console.log("taalla"+CLOUDS[i].cloud_x_position);	
 		if(CLOUDS[i].cloud_id == "left"){
 			CLOUDS[i].cloud_x_position+=cloud_speed;
-			//CLOUDS[i].cloud_y_position+=SPEED/2.5;
+			
 		}
 		else{
 			CLOUDS[i].cloud_x_position-=cloud_speed;	
-			//CLOUDS[i].cloud_y_position+=SPEED/2.5;
 		}
 
-		
+		if(CLOUDS[i].cloud_x_position< -0.4 ||CLOUDS[i].cloud_x_position> 1.4){
+			CLOUDS.splice(i,1);  
+		}	
 	}
 
 }
@@ -372,8 +401,10 @@ function drawScene(){
     	}
 			
 		for(let i=0;i<CLOUDS.length;i++){
+			//if(!CLOUDS[i] == null){
     		CLOUDS[i].draw(ctx);
 			//console.log(OBJECTS);
+			//}
     	}
 
 
