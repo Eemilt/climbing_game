@@ -69,7 +69,9 @@ function main(){
 	gameover.style.display = "none";
 	document.querySelector("#start_button").classList.toggle("hide"); 
 	document.querySelector("#menu").classList.toggle("hide");
+	myMusic.load();
 	myMusic.play();
+	myMusic.volume = 0.6;
 	
 	
 	let canvas = document.getElementById("myCanvas")
@@ -104,7 +106,7 @@ function main(){
 
 function animate(){
 
-
+	var myMusic = document.getElementById("myAudio");
 	SPEED  += 0.0000008;
 	counter +=1;
 	sky += 0.0005;
@@ -146,7 +148,8 @@ function animate(){
 
 		if(score-remember_score == 2500){
 			old_score = true;
-			doublepoints =false		
+			doublepoints = false;
+			myMusic.playbackRate=1.0;
 		}
 	}else{
 		score += 1

@@ -33,6 +33,7 @@ function move(){
 
 
 function move_gameObjects(){
+
 	for(let i=0;i<OBJECTS.length;i++){
 		OBJECTS[i].gameObject_y_position+=SPEED;
 
@@ -41,7 +42,9 @@ function move_gameObjects(){
 			rectX <= OBJECTS[i].gameObject_x_position+gameObject_width-0.02 /*RIGHT_WINDOW*/ && 
 			rectY + 0.05  >= OBJECTS[i].gameObject_y_position /*TOP_WINDOW */&& 
 			rectY<=OBJECTS[i].gameObject_y_position+gameObject_height -0.01 /*BOTTOM_WINDOW*/){
-				
+				var kuolemaAani = document.getElementById("hitAudio");
+				var gameoverAani = document.getElementById("gameoverAudio");  
+				gameoverAani.playbackRate=0.7;
 				var myMusic = document.getElementById("myAudio"); 
 				var gameover2 = document.getElementById("game_over");
 				document.getElementById("score_amount_total").textContent = score;
@@ -53,6 +56,8 @@ function move_gameObjects(){
 				doAnim = false;
 				document.querySelector("#start_button").classList.toggle("hide"); 
 				document.querySelector("#menu").classList.toggle("hide");
+				kuolemaAani.play();
+				gameoverAani.play();
 				myMusic.pause();		
 				
 		}	
@@ -63,6 +68,10 @@ function move_gameObjects(){
 			rectX <= OBJECTS[i].gameObject_x_position+gameObject_width-0.1 /*RIGHT_WINDOW*/ && 
 			rectY + 0.05  >= OBJECTS[i].gameObject_y_position /*TOP_WINDOW */&& 
 			rectY<=OBJECTS[i].gameObject_y_position+gameObject_height -0.04 /*BOTTOM_WINDOW*/){
+				var osumaAani = document.getElementById("tahtiAudio"); 
+				var myMusic = document.getElementById("myAudio");
+				osumaAani.play();
+				myMusic.playbackRate=1.5;
 				doublepoints=true;
 				OBJECTS.splice(i,1);
 			}
