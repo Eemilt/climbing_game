@@ -38,8 +38,14 @@
                 <h2>Your score:</h2>
                 <span id ="score_amount_total"></span>
             </p>
-        
         </div>
+
+        <div id = "highscore_form" style="display:none">
+            <label for="nickname">Enter your nametag:</label><br>
+            <input type="text" id="nickname" value="Player 1"><br>
+            <button id="save_hs" onclick="saveHighScore()">Save highscore</button>
+        </div>
+
         <div id ="menu">
             <button id="start_button" onclick="main()">Start</button>
             <button id="highscores_button" onclick="">Highscores</button>

@@ -47,18 +47,30 @@ function move_gameObjects(){
 				gameoverAani.playbackRate=0.7;
 				var myMusic = document.getElementById("myAudio"); 
 				var gameover2 = document.getElementById("game_over");
+				var highscore_form2 = document.getElementById("highscore_form");
 				document.getElementById("score_amount_total").textContent = score;
+
+
 				if (gameover2.style.display === "none") {
 					gameover2.style.display = "block";
 				} else {
 					gameover2.style.display = "none";
 				}
+				
+				if (highscore_form2.style.display === "none") {
+					highscore_form2.style.display = "block";
+				} else {
+					highscore_form2.style.display = "none";
+				}
+
 				doAnim = false;
 				document.querySelector("#start_button").classList.toggle("hide"); 
 				document.querySelector("#menu").classList.toggle("hide");
+
 				kuolemaAani.play();
 				gameoverAani.play();
-				myMusic.pause();		
+				myMusic.pause();
+					
 				
 		}	
 		

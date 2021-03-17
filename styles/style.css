@@ -193,3 +193,44 @@ canvas{
 #game_over.hide{
     display:none;
 }
+
+#highscore_form{
+    font-family: 'DotGothic16', sans-serif;
+    font-weight: bold;
+    font-size: 1em;
+    top:80%;
+    left:46%;
+    z-index: 3;
+    position : fixed;
+    display : flex;
+    color: whitesmoke;
+    
+}
+
+#highscore_form.hide{
+    display:none;
+}
+
+#save_hs{
+    font-family: 'DotGothic16', sans-serif;
+    font-weight: bold;
+    font-size: 1em;
+
+    display: inline-block;
+    border: 4px solid #3C14D0 ;
+    color: #3C14D0;
+    background: #000000;
+    outline: none;
+
+    
+    position: static;
+    padding:2%;
+    cursor: pointer;
+    transition: all 0.5s;
+    
+}
+
+#save_hs:hover{
+    color:#000000;
+    background-color:#fff;
+}

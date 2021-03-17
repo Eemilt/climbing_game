@@ -17,6 +17,10 @@ let gameObject_height = 0.09
 let hawk_x_position = 0;
 let hawk_y_position =0;
 
+let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+let MAX_HIGH_SCORES = 5;
+
 let score = 0;
 let sky = 0.5;
 let counter =0;
@@ -66,7 +70,9 @@ function main(){
 
 	var myMusic = document.getElementById("myAudio");
 	var gameover = document.getElementById("game_over");
+	var highscore_form = document.getElementById("highscore_form");
 	gameover.style.display = "none";
+	highscore_form.style.display = "none";
 	document.querySelector("#start_button").classList.toggle("hide"); 
 	document.querySelector("#menu").classList.toggle("hide");
 	myMusic.load();
@@ -224,6 +230,26 @@ function sound(src) {
 	  this.sound.pause();
 	}
   }
+
+
+function saveHighScore(e){
+
+	var nickname = document.getElementById("nickname").value;
+
+
+	const Score = {
+		finalscore: score-1,
+		name: nickname
+	};
+
+	highScores.push(Score);
+	highScores.sort((a, b) => b.finalscore - a.finalscore);
+	highScores.splice(5);
+
+
+	localStorage.setItem("highScores", JSON.stringify(highScores));
+	console.log(highScores);
+}
   
 
 
