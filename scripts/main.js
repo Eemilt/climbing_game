@@ -64,7 +64,7 @@ let doAnim = true;
 
 function main(){
 
-	var myMusic = document.getElementById("myAudio"); 
+	var myMusic = document.getElementById("myAudio");
 	var gameover = document.getElementById("game_over");
 	gameover.style.display = "none";
 	document.querySelector("#start_button").classList.toggle("hide"); 
@@ -72,7 +72,6 @@ function main(){
 	myMusic.load();
 	myMusic.play();
 	myMusic.volume = 0.6;
-	
 	
 	let canvas = document.getElementById("myCanvas")
   	let ctx=canvas.getContext("2d");
@@ -163,6 +162,31 @@ function animate(){
 
 	drawScene();
 	window.requestAnimationFrame(animate);			//tällä loopataan vissiin animaatio
+}
+
+
+function mute() {
+
+	var myMusic = document.getElementById("myAudio");
+	var effect1 = document.getElementById("tahtiAudio");
+	var effect2 = document.getElementById("hitAudio");
+	var effect3 = document.getElementById("gameoverAudio");
+	var muteButton = document.getElementById("mute_button");
+
+	if (myMusic.muted) {
+		myMusic.muted = false;
+		effect1.muted = false;
+		effect2.muted = false;
+		effect3.muted = false;
+		muteButton.innerHTML = "Mute";
+	} else {
+		myMusic.muted = true;
+		effect1.muted = true;
+		effect2.muted = true;
+		effect3.muted = true;
+		muteButton.innerHTML = "Unmute";
+
+	}
 }
 
 
