@@ -139,16 +139,20 @@ function animate(){
 
 	if(doublepoints == true){
 		score += 2
+			
 		if(old_score == true){ //2500 points is maximum 
 			old_score = false;
+			if(remember_score == 0){
+				document.querySelector("#score").classList.toggle("double");	
+			}
 			remember_score = score;	
-			document.querySelector("#score").classList.toggle("double");	
-			
+
 		}
 
 		if(score-remember_score == 2500){
 			old_score = true;
 			doublepoints = false;
+			remember_score =0;
 			myMusic.playbackRate=1.0;
 			document.querySelector("#score").classList.toggle("double");	
 		}

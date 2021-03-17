@@ -63,10 +63,7 @@ function spawn_hawk(){
 
 function spawn_cloud(){
 	let spawn_probability = Math.random();
-	let spawn_height = (Math.random() * (0.3 - 0.0) + 0.0).toFixed(4)
-	console.log(spawn_height);
-	let spawn_width = Math.random();
-	
+	let spawn_height = (Math.random() * (0.3 - 0.0) + 0.0).toFixed(4);
 	let left_or_right = Math.floor(Math.random() * 2);
 	if(spawn_probability<0.003){
 		if(left_or_right == 0){

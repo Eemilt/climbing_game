@@ -74,6 +74,8 @@ function move_gameObjects(){
 				myMusic.playbackRate=1.5;
 				doublepoints=true;
 				OBJECTS.splice(i,1);
+				old_score = true;
+	
 			}
 		
 		if(OBJECTS[i].gameObject_y_position>1){	
