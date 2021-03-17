@@ -170,27 +170,37 @@ function animate(){
 }
 
 
-function mute() {
+function muteMusic() {
 
 	var myMusic = document.getElementById("myAudio");
-	var effect1 = document.getElementById("tahtiAudio");
-	var effect2 = document.getElementById("hitAudio");
-	var effect3 = document.getElementById("gameoverAudio");
-	var muteButton = document.getElementById("mute_button");
+	var muteMusicButton = document.getElementById("mute_music_button");
 
 	if (myMusic.muted) {
 		myMusic.muted = false;
+		muteMusicButton.innerHTML = "Mute music";
+	} else {
+		myMusic.muted = true;
+		muteMusicButton.innerHTML = "Unmute music";
+	}
+}
+
+function muteSfx() {
+
+	var effect1 = document.getElementById("tahtiAudio");
+	var effect2 = document.getElementById("hitAudio");
+	var effect3 = document.getElementById("gameoverAudio");
+	var muteSfxButton = document.getElementById("mute_sfx_button");
+
+	if (effect1.muted) {
 		effect1.muted = false;
 		effect2.muted = false;
 		effect3.muted = false;
-		muteButton.innerHTML = "Mute";
+		muteSfxButton.innerHTML = "Mute sfx";
 	} else {
-		myMusic.muted = true;
 		effect1.muted = true;
 		effect2.muted = true;
 		effect3.muted = true;
-		muteButton.innerHTML = "Unmute";
-
+		muteSfxButton.innerHTML = "Unmute sfx";
 	}
 }
 
