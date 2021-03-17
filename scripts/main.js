@@ -141,7 +141,8 @@ function animate(){
 		score += 2
 		if(old_score == true){ //2500 points is maximum 
 			old_score = false;
-			remember_score = score;		
+			remember_score = score;	
+			document.querySelector("#score").classList.toggle("double");	
 			
 		}
 
@@ -149,6 +150,7 @@ function animate(){
 			old_score = true;
 			doublepoints = false;
 			myMusic.playbackRate=1.0;
+			document.querySelector("#score").classList.toggle("double");	
 		}
 	}else{
 		score += 1
@@ -156,6 +158,9 @@ function animate(){
 
 
 	if (!doAnim){
+		if(score-remember_score<2500 && remember_score != 0){//preventing score to be in double points shape if failes while double points is on
+			document.querySelector("#score").classList.toggle("double");	
+		}
 		ctx = null;
 		return;
 	}
