@@ -22,7 +22,7 @@ function gameObjects_animate(){
     if(can_spawn== true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
         
         let window_or_star = Math.random();
-        if(window_or_star<0.07){
+        if(window_or_star<0.04){
             OBJECTS.push(new GameObjects(star_image,probabilityxaxis, -0.1,0.07,0.07));
             
             
