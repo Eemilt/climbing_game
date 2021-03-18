@@ -69,6 +69,7 @@ let doAnim = true;
 function main(){
 
 	var myMusic = document.getElementById("myAudio");
+	document.getElementById("myAudio").loop = true;
 	var gameover = document.getElementById("game_over");
 	var highscore_form = document.getElementById("highscore_form");
 	gameover.style.display = "none";

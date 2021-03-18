@@ -36,7 +36,7 @@ canvas{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
     position: fixed;
-    font-size: 2em;
+    font-size: 2vw;
     padding-top:0%;
     margin-top:0%;
     padding-left:44%;
@@ -47,7 +47,7 @@ canvas{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
     position: fixed;
-    font-size: 2.5em;
+    font-size: 2.5vw;
     padding-top:0%;
     margin-top:0%;
     padding-left:44%;
@@ -70,7 +70,8 @@ canvas{
 #mute_music_button{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 2vw;
+    white-space: normal;
 
     display: inline-block;
     border: 4px solid #3C14D0 ;
@@ -79,12 +80,10 @@ canvas{
     outline: none;
 
     
-    position: absolute;
-    left: 75.6%;
-    top: 86.9%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding:0.1%;
+    position: fixed;
+    left: 85%;
+    top: 68%;
+    height: 10%;
     cursor: pointer;
     transition: all 0.5s;
 }
@@ -92,7 +91,8 @@ canvas{
 #mute_sfx_button{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 2vw;
+    white-space: normal;
 
     display: inline-block;
     border: 4px solid #3C14D0 ;
@@ -101,12 +101,10 @@ canvas{
     outline: none;
 
     
-    position: absolute;
-    left: 87%;
-    top: 86.9%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding:0.1%;
+    position: fixed;
+    left: 85%;
+    top: 80%;
+    height: 10%;
     cursor: pointer;
     transition: all 0.5s;
 }
@@ -114,7 +112,8 @@ canvas{
 #highscores_button{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 2vw;
+    white-space: normal;
 
     display: inline-block;
     border: 4px solid #3C14D0 ;
@@ -123,12 +122,10 @@ canvas{
     outline: none;
 
     
-    position: absolute;
+    position: fixed;
     left: 45%;
     top: 59%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding:1%;
+    height: 10%;
     cursor: pointer;
     transition: all 0.5s;
     
@@ -147,21 +144,22 @@ canvas{
 #start_button{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 2vw;
+    white-space: normal;
 
     display: inline-block;
-    border: 4px solid #3C14D0 ;
+    border: 4px solid #3C14D0;
     color: #3C14D0;
     background: #000000;
     outline: none;
 
-    
-    position: absolute;
+    position: fixed;
     left: 47%;
-    top: 47%;
-    -ms-transform: translateY(-50%);
+    top:44%;
+    height: 10%;
+    /*-ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    padding:1%;
+    padding:1%;*/
     cursor: pointer;
     transition: all 0.5s;
     
@@ -180,7 +178,7 @@ canvas{
 #game_over{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 1vw;
     top:15%;
     left:46.5%;
     z-index: 3;
@@ -197,14 +195,22 @@ canvas{
 #highscore_form{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
-    font-size: 1em;
-    top:80%;
+    font-size: 1vw;
+    top:70%;
     left:46%;
     z-index: 3;
     position : fixed;
     display : flex;
     color: whitesmoke;
     
+}
+
+#nickname{
+    width:100%;
+    padding: 5px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;  
 }
 
 #highscore_form.hide{
@@ -214,13 +220,14 @@ canvas{
 #save_hs{
     font-family: 'DotGothic16', sans-serif;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 1vw;
 
     display: inline-block;
     border: 4px solid #3C14D0 ;
     color: #3C14D0;
     background: #000000;
     outline: none;
+    
 
     
     position: static;
