@@ -1,7 +1,7 @@
 function spider(ctx) {
 	move(); //movement
 	x = Math.floor(Math.random() * 3); 
-    ctx.drawImage(hamis_array[x],rectX,rectY, 0.06, 0.06); //arvotaan joku hämis kuvista
+    ctx.drawImage(hamis_array[x],rectX,rectY, 0.06, 0.06); 
 }
 
 
@@ -12,14 +12,14 @@ function gameObjects_animate(){
     let can_spawn= false;  		//true if there is space for new window
     if(OBJECTS.length>0){		
 
-        if(OBJECTS[OBJECTS.length-1].gameObject_y_position>height_between){		//taulukon vika alkio on aina näemmä "ylin" ja sen korkeuden tarkastelu riittää päättämään voiko uuden ikkunan asettaa
+        if(OBJECTS[OBJECTS.length-1].gameObject_y_position>height_between){		
             can_spawn= true;
         }
     }else{
         can_spawn=true;
     }
         
-    if(can_spawn== true){		//tällä saa spawnattua vain yhden laatikon kerrallaan canvakseen
+    if(can_spawn== true){		
         
         let window_or_star = Math.random();
         if(window_or_star<0.04){
@@ -32,12 +32,6 @@ function gameObjects_animate(){
 
     }
     move_gameObjects();
-}
-
-function spider(ctx) {
-	move(); //movement
-	x = Math.floor(Math.random() * 3); 
-    ctx.drawImage(hamis_array[x],rectX,rectY, 0.06, 0.06); //arvotaan joku hämis kuvista
 }
 
 

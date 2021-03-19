@@ -91,8 +91,7 @@ function move_gameObjects(){
 			}
 		
 		if(OBJECTS[i].gameObject_y_position>1){	
-			OBJECTS.splice(i,1); // removing 1 element at index i
-			
+			OBJECTS.splice(i,1); 		
 			i--;
 		}
 		

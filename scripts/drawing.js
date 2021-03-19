@@ -21,13 +21,13 @@ function drawScene(){
 function drawBackground(ctx,sky){
 
 	
-	ctx.beginPath();			//vihreän maan luonti
+	ctx.beginPath();			
 	ctx.fillStyle="green";
 	ctx.rect(0,0.5,1,0.5);
     ctx.fill();
 	
 
-	ctx.beginPath();				//taivaan luonti
+	ctx.beginPath();				
 	ctx.fillStyle=	"hsl(195, 100%, "+ lightness+ "%)";
 	ctx.rect(0,0,1,sky);
 	ctx.fill();
@@ -36,7 +36,7 @@ function drawBackground(ctx,sky){
 		HAWKS[i].draw(ctx);
 	}
 
-    ctx.beginPath();			//tässä luodaan "tausta" talon ruskehtava runko joka ei siis liiku
+    ctx.beginPath();			
     ctx.lineWidth=0.01;
     ctx.fillStyle="BurlyWood";
     ctx.rect(0.12,-0.1,0.75,1.2);
