@@ -136,7 +136,7 @@ function animate(){
 	}
 
 
-	if(3500 <counter && counter<7000){ //pilville 3500-7000
+	if(3500 <counter && counter<14000){ //pilville 3500-7000
 			spawn_cloud();
 	}
 
@@ -249,7 +249,8 @@ function saveHighScore(e){
 
 
 	localStorage.setItem("highScores", JSON.stringify(highScores));
-	console.log(highScores);
+	
+	alert(`${nickname} score saved!`);
 }
   
 
